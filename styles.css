@@ -8,6 +8,13 @@
 :root {
     --purple-start: #667eea;
     --purple-end: #764ba2;
+    --purple: #667eea;
+    --blue: #4facfe;
+    --green: #43e97b;
+    --orange: #ff8c42;
+    --pink: #f093fb;
+    --teal: #00d4ff;
+    --yellow: #ffd93d;
     --text-dark: #1a202c;
     --text-gray: #4a5568;
     --text-light: #718096;
@@ -87,7 +94,7 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    background: linear-gradient(135deg, var(--purple-start) 0%, var(--purple-end) 100%);
+     background: linear-gradient(135deg, var(--purple-start) 0%, var(--purple-end) 100%);
     color: white;
     padding: 120px 0 180px;
     overflow: hidden;
@@ -299,11 +306,11 @@ body {
 
 .feature-card {
     background: white;
-    padding: 40px 32px;
+    padding: 32px 28px;
     border-radius: 16px;
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
-    text-align: center;
+    text-align: right;
 }
 
 .feature-card:hover {
@@ -311,11 +318,39 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.green-bg {
+    background: rgba(67, 233, 123, 0.1);
+}
+
+.blue-bg {
+    background: rgba(79, 172, 254, 0.1);
+}
+
+.purple-bg {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.orange-bg {
+    background: rgba(250, 112, 154, 0.1);
+}
+
+.pink-bg {
+    background: rgba(240, 147, 251, 0.1);
+}
+
+.teal-bg {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.yellow-bg {
+    background: rgba(255, 217, 61, 0.15);
+}
+
 .feature-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 24px;
-    border-radius: 16px;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 20px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -327,45 +362,90 @@ body {
 }
 
 .feature-icon .material-symbols-rounded {
-    font-size: 40px;
+    font-size: 32px;
     color: white;
 }
 
 .purple {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: var(--purple);
 }
 
 .blue {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: var(--blue);
 }
 
 .green {
-    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    background: var(--green);
 }
 
 .orange {
-    background: linear-gradient(135deg, #fa709a, #fee140);
+    background: var(--orange);
 }
 
 .pink {
-    background: linear-gradient(135deg, #f093fb, #f5576c);
+    background: var(--pink);
 }
 
 .teal {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: var(--teal);
+}
+
+.yellow {
+    background: var(--yellow);
 }
 
 .feature-card h3 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: var(--text-dark);
 }
 
-.feature-card p {
-    font-size: 16px;
+.green-bg h3 {
+    color: var(--green);
+}
+
+.blue-bg h3 {
+    color: var(--blue);
+}
+
+.purple-bg h3 {
+    color: var(--purple);
+}
+
+.pink-bg h3 {
+    color: var(--pink);
+}
+
+.orange-bg h3 {
+    color: var(--orange);
+}
+
+.yellow-bg h3 {
+    color: var(--yellow);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    font-size: 15px;
     color: var(--text-gray);
-    line-height: 1.6;
+    line-height: 1.8;
+    margin-bottom: 8px;
+    padding-right: 16px;
+    position: relative;
+}
+
+.feature-list li:before {
+    content: "•";
+    position: absolute;
+    right: 0;
+    color: var(--text-gray);
+    font-weight: bold;
 }
 
 /* Showcase Section */
@@ -422,9 +502,6 @@ body {
 
 .text-highlight {
     background: linear-gradient(135deg, var(--purple-start), var(--purple-end));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .showcase-content p {
@@ -482,7 +559,7 @@ body {
     width: 64px;
     height: 64px;
     margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--purple-start), var(--purple-end));
+    background: linear-gradient(135deg, var(--purple-start), var(--purple-end));;
     border-radius: 50%;
     display: flex;
     align-items: center;
