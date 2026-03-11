@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="מלי - מערכת ניהול מקצועית לתיקי ביטוח לאומי. ניהול לקוחות, מסמכים, ועדות ותשלומים במקום אחד.">
+    <meta name="description"
+        content="מלי - מערכת ניהול מקצועית לתיקי ביטוח לאומי. ניהול לקוחות, מסמכים, ועדות ותשלומים במקום אחד.">
     <title>מלי - ניהול תיקי ביטוח לאומי במקום אחד</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <img src="assets/logo.png" alt="מלי" class="logo">
+                <div class="logo-group">
+                    <img src="assets/logo.png" alt="מלי" class="logo">
+                    <span class="logo-tagline">מערכת ניהול מידע ללקוחות מיוצגים בביטוח לאומי</span>
+                </div>
                 <nav class="nav">
-                    <a href="#features">תכונות</a>
-                    <a href="#benefits">יתרונות</a>
-                    <a href="#testimonials">המלצות</a>
-                    <a href="#contact" class="btn-nav">התחל עכשיו</a>
+                    <button onclick="openContactModal()" class="btn-nav">קבעו הדגמה חינם</button>
                 </nav>
             </div>
         </div>
@@ -35,28 +41,36 @@
             <div class="hero-grid">
                 <div class="hero-content">
                     <h1 class="hero-title">
-                        ניהול תיקי <span class="highlight">ביטוח לאומי</span> במקום אחד
+                        מערכת חכמה לניהול תיקי <span class="highlight">ביטוח לאומי</span> למייצגים
                     </h1>
                     <p class="hero-subtitle">
-                        מערכת ניהול מקצועית למשרדים ובאי כוח המייצגים עשרות או מאות לקוחות מול ביטוח לאומי
+                        שקט נפשי, שליטה מלאה ועדכון שוטף של כל נתוני הלקוחות שלכם, בלחיצת כפתור.
                     </p>
                     <div class="hero-features">
                         <div class="hero-feature">
                             <span class="material-symbols-rounded">check_circle</span>
-                            <span>סנכרון אוטומטי</span>
+                            <span>התראות חכמות</span>
                         </div>
                         <div class="hero-feature">
                             <span class="material-symbols-rounded">check_circle</span>
-                            <span>ללא התחייבות</span>
+                            <span>חיפושים וסינונים מתקדמים</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="material-symbols-rounded">check_circle</span>
+                            <span>התעדכנות שוטפת</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="material-symbols-rounded">check_circle</span>
+                            <span>סנכרון אוטומטי</span>
                         </div>
                     </div>
                     <div class="hero-cta">
-                        <a href="#contact" class="btn btn-primary">קבעו הדגמה חינם</a>
-                        <a href="#features" class="btn btn-secondary">גלו עוד</a>
+                        <button onclick="openContactModal()" class="btn btn-primary">קבעו הדגמה חינם</button>
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="assets/memshak-screenshot.png" alt="מערכת מלי" class="mockup">
+                    <img src="assets/memshak-screenshot.png" alt="מערכת מלי" class="mockup lightbox-trigger"
+                        id="heroScreenshot" title="לחץ להגדלה">
                 </div>
             </div>
         </div>
@@ -64,7 +78,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features" id="features">
+    <!-- <section class="features" id="features">
         <div class="container">
             <h2 class="section-title">איך אנחנו עוזרים לכם</h2>
             <div class="features-grid">
@@ -136,10 +150,44 @@
                 </div>
             </div>
         </div>
+    </section> -->
+
+    <!-- Video Demo Section -->
+    <section class="video-demo">
+        <div class="container">
+            <h2 class="section-title">ראו את המערכת בפעולה</h2>
+            <p class="section-subtitle">2 דקות שיראו לכם איך מלי עובדת</p>
+            <div class="main-video">
+                <div class="video-wrapper">
+                    <video id="mainVideo" controls poster="assets/thumbnails/main-demo.jpg">
+                        <source src="assets/videos/clients-management.mp4" type="video/mp4">
+                        הדפדפן שלך לא תומך בסרטוני וידאו.
+                    </video>
+                </div>
+            </div>
+            <div class="video-pills">
+                <button class="video-pill active" data-video="clients-management" data-title="ניהול לקוחות">
+                    <span class="material-symbols-rounded">groups</span>
+                    <span>ניהול לקוחות</span>
+                </button>
+                <button class="video-pill" data-video="protocols" data-title="פרוטוקולים">
+                    <span class="material-symbols-rounded">folder_open</span>
+                    <span>פרוטוקולים</span>
+                </button>
+                <button class="video-pill" data-video="committees" data-title="ועדות">
+                    <span class="material-symbols-rounded">event</span>
+                    <span>ועדות</span>
+                </button>
+                <button class="video-pill" data-video="payments" data-title="תשלומים">
+                    <span class="material-symbols-rounded">payments</span>
+                    <span>תשלומים</span>
+                </button>
+            </div>
+        </div>
     </section>
 
     <!-- Visual Feature Showcase -->
-    <section class="showcase">
+    <!-- <section class="showcase">
         <div class="container">
             <div class="showcase-grid">
                 <div class="showcase-image">
@@ -148,7 +196,8 @@
                 <div class="showcase-content">
                     <div class="badge">לוח בקרה</div>
                     <h2>כל המידע שאתם צריכים <span class="text-highlight">במקום אחד</span></h2>
-                    <p>לוח בקרה חכם שמציג את כל המידע החשוב - ועדות קרובות, תשלומים ממתינים, וסטטוסים מעודכנים. תמיד תדעו מה קורה עם כל לקוח.</p>
+                    <p>לוח בקרה חכם שמציג את כל המידע החשוב - ועדות קרובות, תשלומים ממתינים, וסטטוסים מעודכנים. תמיד
+                        תדעו מה קורה עם כל לקוח.</p>
                     <ul class="check-list">
                         <li><span class="material-symbols-rounded">done</span> תצוגה מרוכזת וברורה</li>
                         <li><span class="material-symbols-rounded">done</span> עדכונים בזמן אמת</li>
@@ -164,7 +213,8 @@
                 <div class="showcase-content">
                     <div class="badge">סנכרון חכם</div>
                     <h2>התעדכנות <span class="text-highlight">אוטומטית</span> מביטוח לאומי</h2>
-                    <p>המערכת מתעדכנת באופן אוטומטי עם כל השינויים מביטוח לאומי. לא צריך להעתיק ידנית או לדאוג שמשהו יישכח.</p>
+                    <p>המערכת מתעדכנת באופן אוטומטי עם כל השינויים מביטוח לאומי. לא צריך להעתיק ידנית או לדאוג שמשהו
+                        יישכח.</p>
                     <ul class="check-list">
                         <li><span class="material-symbols-rounded">done</span> חיבור מאובטח ומוצפן</li>
                         <li><span class="material-symbols-rounded">done</span> עדכון אוטומטי של נתונים</li>
@@ -173,7 +223,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Benefits Section -->
     <section class="benefits" id="benefits">
@@ -245,7 +295,8 @@
                     <div class="testimonial-avatar">
                         <div class="avatar-placeholder">מ</div>
                     </div>
-                    <p class="testimonial-text">"סוף סוף יש לי שליטה מלאה על כל התיקים. אני יודעת בדיוק מה קורה עם כל לקוח."</p>
+                    <p class="testimonial-text">"סוף סוף יש לי שליטה מלאה על כל התיקים. אני יודעת בדיוק מה קורה עם כל
+                        לקוח."</p>
                     <div class="testimonial-author">
                         <strong>מיכל לוי</strong>
                         <span>מנהלת משרד מימוש זכויות</span>
@@ -255,7 +306,8 @@
                     <div class="testimonial-avatar">
                         <div class="avatar-placeholder">י</div>
                     </div>
-                    <p class="testimonial-text">"הסנכרון עם ביטוח לאומי חוסך לנו טעויות ועדכונים ידניים. זה פשוט משנה משחק."</p>
+                    <p class="testimonial-text">"הסנכרון עם ביטוח לאומי חוסך לנו טעויות ועדכונים ידניים. זה פשוט משנה
+                        משחק."</p>
                     <div class="testimonial-author">
                         <strong>יוסי אברהם</strong>
                         <span>יועץ ביטוח לאומי</span>
@@ -272,7 +324,7 @@
             <div class="cta-content">
                 <h2>מוכנים להתחיל?</h2>
                 <p>הצטרפו למשרדים מובילים שכבר עובדים עם מלי</p>
-                <a href="mailto:mali.help.app@gmail.com" class="btn btn-light">קבעו הדגמה חינם</a>
+                <button onclick="openContactModal()" class="btn btn-light">קבעו הדגמה חינם</button>
             </div>
         </div>
         <div class="wave-top"></div>
@@ -283,8 +335,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <img src="assets/logo.png" alt="מלי" class="footer-logo">
-                    <p>ניהול תיקי ביטוח לאומי כמו שצריך</p>
+                    <img src="assets/logoWhite.png" alt="מלי" class="footer-logo">
+                    <p>הסטנדרט החדש למייצגים בביטוח לאומי</p>
                 </div>
                 <div class="footer-links">
                     <h4>צור קשר</h4>
@@ -292,9 +344,74 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 מלי. כל הזכויות שמורות</p>
+                <p>&copy; 2026 מלי פלטפורמות תוכנה בע"מ                    . כל הזכויות שמורות</p>
             </div>
         </div>
     </footer>
+
+    <!-- Contact Form Modal -->
+    <div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-label="טופס יצירת קשר">
+        <div class="contact-modal">
+            <button class="contact-close" id="contactClose" aria-label="סגור">&times;</button>
+
+            <!-- Default form state -->
+            <div id="contactFormWrap">
+                <div class="contact-modal-header">
+                    <div class="contact-modal-icon">
+                        <span class="material-symbols-rounded">calendar_month</span>
+                    </div>
+                    <h2>קבעו הדגמה חינם</h2>
+                    <p>נחזור אליכם תוך יום עסקים</p>
+                </div>
+                <form id="contactForm" action="https://formspree.io/f/xaqpekpn" method="POST" novalidate>
+                    <div class="form-group">
+                        <label for="fullName">שם מלא <span class="req">*</span></label>
+                        <input type="text" id="fullName" name="שם מלא" placeholder="ישראל ישראלי" required>
+                        <span class="field-error">נא למלא שם מלא</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">טלפון <span class="req">*</span></label>
+                        <input type="tel" id="phone" name="טלפון" placeholder="0501234567" required>
+                        <span class="field-error">נא למלא מספר טלפון ישראלי תקין (לדוגמה: 0501234567)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">אימייל <span class="req">*</span></label>
+                        <input type="email" id="email" name="אימייל" placeholder="you@example.com" required>
+                        <span class="field-error">נא למלא כתובת אימייל תקינה</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="officeName">שם משרד <span class="req">*</span></label>
+                        <input type="text" id="officeName" name="שם משרד" placeholder="משרד עורכי דין כהן" required>
+                        <span class="field-error">נא למלא שם משרד</span>
+                    </div>
+                    <button type="submit" class="contact-submit" id="submitBtn">
+                        <span id="submitText">שלחו פרטים</span>
+                        <span id="submitSpinner" style="display:none">שולח...</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success state -->
+            <div id="contactSuccess" style="display:none" class="contact-success">
+                <div class="success-icon">
+                    <span class="material-symbols-rounded">check_circle</span>
+                </div>
+                <h2>תודה! קיבלנו את הפרטים</h2>
+                <p>נחזור אליכם בהקדם לתיאום ההדגמה</p>
+                <button onclick="closeContactModal()" class="btn-close-success">סגור</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="תצוגת מסך מוגדלת">
+        <button class="lightbox-close" id="lightboxClose" aria-label="סגור">&times;</button>
+        <div class="lightbox-frame">
+            <img src="assets/memshak-screenshot.png" alt="מערכת מלי" class="lightbox-img">
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
 </body>
+
 </html>
