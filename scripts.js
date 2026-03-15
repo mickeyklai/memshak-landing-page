@@ -105,6 +105,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// ── FAQ Accordion ──
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const isOpen = this.getAttribute('aria-expanded') === 'true';
+            // Close all
+            document.querySelectorAll('.faq-question').forEach(function (q) {
+                q.setAttribute('aria-expanded', 'false');
+                q.nextElementSibling.classList.remove('open');
+            });
+            // Open clicked (if it was closed)
+            if (!isOpen) {
+                this.setAttribute('aria-expanded', 'true');
+                this.nextElementSibling.classList.add('open');
+            }
+        });
+    });
+});
+
 // ── Video pill switching ──
 document.addEventListener('DOMContentLoaded', function () {
     const videoPills = document.querySelectorAll('.video-pill');
@@ -115,9 +134,14 @@ document.addEventListener('DOMContentLoaded', function () {
         pill.addEventListener('click', function () {
             videoPills.forEach(function (p) { p.classList.remove('active'); });
             this.classList.add('active');
-            mainVideo.src = 'assets/videos/' + this.getAttribute('data-video') + '.mp4';
+            const source = mainVideo.querySelector('source');
+            if (source) {
+                source.src = 'assets/videos/' + this.getAttribute('data-video') + '.mp4';
+            } else {
+                mainVideo.src = 'assets/videos/' + this.getAttribute('data-video') + '.mp4';
+            }
             mainVideo.load();
-            mainVideo.play();
+            mainVideo.play().catch(function () {});
         });
     });
 });

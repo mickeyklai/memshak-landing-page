@@ -156,31 +156,35 @@
     <section class="video-demo">
         <div class="container">
             <h2 class="section-title">ראו את המערכת בפעולה</h2>
-            <p class="section-subtitle">2 דקות שיראו לכם איך מלי עובדת</p>
+            <p class="section-subtitle">סרטון של דקה שיראה לכם איך מלי עובדת</p>
             <div class="main-video">
                 <div class="video-wrapper">
-                    <video id="mainVideo" controls poster="assets/thumbnails/main-demo.jpg">
-                        <source src="assets/videos/clients-management.mp4" type="video/mp4">
+                    <video id="mainVideo" controls>
+                        <source src="assets/videos/OpenVideo.mp4" type="video/mp4">
                         הדפדפן שלך לא תומך בסרטוני וידאו.
                     </video>
                 </div>
             </div>
             <div class="video-pills">
-                <button class="video-pill active" data-video="clients-management" data-title="ניהול לקוחות">
-                    <span class="material-symbols-rounded">groups</span>
-                    <span>ניהול לקוחות</span>
+                <button class="video-pill active" data-video="OpenVideo" data-title="סקירת המערכת">
+                    <span class="material-symbols-rounded">play_circle</span>
+                    <span>סקירת המערכת</span>
                 </button>
-                <button class="video-pill" data-video="protocols" data-title="פרוטוקולים">
-                    <span class="material-symbols-rounded">folder_open</span>
+                <button class="video-pill" data-video="PniyotVideo" data-title="פניות">
+                    <span class="material-symbols-rounded">send</span>
+                    <span>פניות</span>
+                </button>
+                <button class="video-pill" data-video="MichtavimVideo" data-title="מכתבים">
+                    <span class="material-symbols-rounded">mail</span>
+                    <span>מכתבים</span>
+                </button>
+                <button class="video-pill" data-video="ProtocolsVideo" data-title="פרוטוקולים">
+                    <span class="material-symbols-rounded">article</span>
                     <span>פרוטוקולים</span>
                 </button>
-                <button class="video-pill" data-video="committees" data-title="ועדות">
+                <button class="video-pill" data-video="VaadotVideo" data-title="ועדות">
                     <span class="material-symbols-rounded">event</span>
                     <span>ועדות</span>
-                </button>
-                <button class="video-pill" data-video="payments" data-title="תשלומים">
-                    <span class="material-symbols-rounded">payments</span>
-                    <span>תשלומים</span>
                 </button>
             </div>
         </div>
@@ -228,49 +232,112 @@
     <!-- Benefits Section -->
     <section class="benefits" id="benefits">
         <div class="container">
-            <h2 class="section-title">למה משרדים בוחרים במלי?</h2>
+            <h2 class="section-title">למה מייצגים בוחרים במלי?</h2>
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <span class="material-symbols-rounded">timer</span>
+                        <span class="material-symbols-rounded">hub</span>
                     </div>
-                    <h3>חיסכון בזמן</h3>
-                    <p>חסכו שעות עבודה כל שבוע עם אוטומציה חכמה</p>
+                    <h3>כל המידע במקום אחד</h3>
+                    <p>גישה נוחה, ברורה ומסודרת לכל נתוני הלקוחות.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <span class="material-symbols-rounded">verified</span>
+                        <span class="material-symbols-rounded">search</span>
                     </div>
-                    <h3>אפס טעויות</h3>
-                    <p>הכל מסונכרן ומעודכן אוטומטית</p>
+                    <h3>חיפוש וסינון מתקדמים</h3>
+                    <p>מוצאים בדיוק מה שצריך במהירות ובקלות.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <span class="material-symbols-rounded">trending_up</span>
+                        <span class="material-symbols-rounded">sync</span>
                     </div>
-                    <h3>צמיחה קלה</h3>
-                    <p>קחו יותר לקוחות בלי לאבד שליטה</p>
+                    <h3>סנכרון שוטף בלחיצה</h3>
+                    <p>המידע מתעדכן בצורה פשוטה, בלי לרדוף אחרי רפרש.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <span class="material-symbols-rounded">support_agent</span>
+                        <span class="material-symbols-rounded">savings</span>
                     </div>
-                    <h3>שירות מעולה</h3>
-                    <p>תנו ללקוחות מענה מהיר ומקצועי</p>
+                    <h3>חיסכון בזמן ובכסף</h3>
+                    <p>פחות עבודה ידנית, יותר יעילות למשרד.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <span class="material-symbols-rounded">update</span>
+                        <span class="material-symbols-rounded">dashboard</span>
                     </div>
-                    <h3>עדכונים מתמידים</h3>
-                    <p>תכונות חדשות ושיפורים על בסיס משוב מלקוחות</p>
+                    <h3>יותר שליטה על עומס העבודה</h3>
+                    <p>נהלו יותר תיקים בלי לאבד תמונה מלאה.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <span class="material-symbols-rounded">lock</span>
+                        <span class="material-symbols-rounded">volunteer_activism</span>
                     </div>
-                    <h3>מאובטח לחלוטין</h3>
-                    <p>המידע שלכם בטוח ומוצפן</p>
+                    <h3>יותר זמן ללקוחות</h3>
+                    <p>התפנו למה שבאמת חשוב: טיפול, שירות וליווי מקצועי.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">שאלות נפוצות</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>מה זה מלי?</span>
+                        <span class="faq-icon material-symbols-rounded">expand_more</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>מלי היא מערכת ייעודית למייצגים מול ביטוח לאומי, שמרכזת במקום אחד את כל המידע החשוב כדי לאפשר עבודה מסודרת, מהירה ונוחה יותר.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>למי מלי מתאימה?</span>
+                        <span class="faq-icon material-symbols-rounded">expand_more</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>מלי מתאימה למייצגים, עורכי דין ובעלי משרדים שעובדים מול ביטוח לאומי ורוצים לחסוך זמן, לצמצם עבודה ידנית, ולעבוד עם מידע נגיש וברור יותר.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>מה היתרון של מלי למשרד שלי?</span>
+                        <span class="faq-icon material-symbols-rounded">expand_more</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>מלי מרכזת מידע, מאפשרת חיפוש וסינון מתקדמים, מציגה עדכונים בצורה ברורה, וחוסכת שעות עבודה יקרות בעבודה היומיומית.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>כמה זמן אפשר לחסוך עם מלי?</span>
+                        <span class="faq-icon material-symbols-rounded">expand_more</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>במקום לבדוק כל לקוח בנפרד ולעבור ידנית על מידע, אפשר לראות עדכונים בצורה מרוכזת ומהירה. כך חוסכים זמן בעבודה השוטפת ומתפנים לטיפול בלקוחות.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>האם קל להתחיל לעבוד עם מלי?</span>
+                        <span class="faq-icon material-symbols-rounded">expand_more</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>כן. ההתקנה פשוטה ומהירה, ואפשר להתחיל לעבוד תוך דקות. המערכת נבנתה כדי להיות ברורה ונוחה לשימוש מהיום הראשון.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>האם המידע של הלקוחות מאובטח?</span>
+                        <span class="faq-icon material-symbols-rounded">expand_more</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>כן. המידע נשמר בצורה מוצפנת ונגיש רק למשתמשים המורשים במשרד, כך שהשליטה נשארת בידיים שלכם.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -279,38 +346,38 @@
     <!-- Testimonials -->
     <section class="testimonials" id="testimonials">
         <div class="container">
-            <h2 class="section-title">מה אומרים עלינו</h2>
+            <h2 class="section-title">הלקוחות שלנו כבר מרגישים את ההבדל</h2>
             <div class="testimonials-grid">
                 <div class="testimonial">
                     <div class="testimonial-avatar">
-                        <div class="avatar-placeholder">ר</div>
+                        <div class="avatar-placeholder avatar-blue">ר.כ</div>
                     </div>
                     <p class="testimonial-text">"מאז שעברנו למלי, אנחנו חוסכים שעות כל שבוע. המערכת פשוט עובדת."</p>
                     <div class="testimonial-author">
-                        <strong>עו"ד רונית כהן</strong>
-                        <span>משרד עורכי דין לזכויות סוציאליות</span>
+                        <strong>עו"ד ר.כ.</strong>
+                        <span>שותפה במשרד עו"ד</span>
                     </div>
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-avatar">
-                        <div class="avatar-placeholder">מ</div>
+                        <div class="avatar-placeholder avatar-teal">מ.ל</div>
                     </div>
                     <p class="testimonial-text">"סוף סוף יש לי שליטה מלאה על כל התיקים. אני יודעת בדיוק מה קורה עם כל
                         לקוח."</p>
                     <div class="testimonial-author">
-                        <strong>מיכל לוי</strong>
-                        <span>מנהלת משרד מימוש זכויות</span>
+                        <strong>עו"ד מ.ל.</strong>
+                        <span>מנהל משרד עו"ד</span>
                     </div>
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-avatar">
-                        <div class="avatar-placeholder">י</div>
+                        <div class="avatar-placeholder avatar-amber">י.א</div>
                     </div>
                     <p class="testimonial-text">"הסנכרון עם ביטוח לאומי חוסך לנו טעויות ועדכונים ידניים. זה פשוט משנה
                         משחק."</p>
                     <div class="testimonial-author">
-                        <strong>יוסי אברהם</strong>
-                        <span>יועץ ביטוח לאומי</span>
+                        <strong>גב' י.א.</strong>
+                        <span>מסייעת בהגשת תביעות</span>
                     </div>
                 </div>
             </div>
@@ -340,11 +407,11 @@
                 </div>
                 <div class="footer-links">
                     <h4>צור קשר</h4>
-                    <p>mali.help.app@gmail.com</p>
+                    <p><a href="mailto:mali.help.app@gmail.com" style="color:inherit;text-decoration:underline;">שלחו לנו מייל</a></p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 מלי פלטפורמות תוכנה בע"מ                    . כל הזכויות שמורות</p>
+                <p>&copy; 2026 מלי פלטפורמות תוכנה בע"מ. כל הזכויות שמורות &nbsp;|&nbsp; <a href="assets/terms-of-use.pdf" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">תנאי שימוש</a> &nbsp;|&nbsp; <a href="assets/privacy-policy.pdf" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">מדיניות פרטיות</a></p>
             </div>
         </div>
     </footer>
@@ -385,7 +452,7 @@
                         <span class="field-error">נא למלא שם משרד</span>
                     </div>
                     <button type="submit" class="contact-submit" id="submitBtn">
-                        <span id="submitText">שלחו פרטים</span>
+                        <span id="submitText">שליחה </span>
                         <span id="submitSpinner" style="display:none">שולח...</span>
                     </button>
                 </form>
