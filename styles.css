@@ -676,13 +676,17 @@ body {
         white-space: nowrap;
     }
 
-    /* Hero — hide screenshot, keep text clean */
+    /* Hero */
     .hero {
         padding: 48px 0 100px;
     }
 
     .hero-image {
-        display: none;
+        order: -1;
+    }
+
+    .mockup {
+        border-radius: 12px;
     }
 
     .hero-title {
@@ -778,7 +782,7 @@ body {
 
     /* CTA */
     .cta-section {
-        padding: 110px 0 64px;
+        padding: 140px 0 64px;
     }
 
     .cta-content h2 {
@@ -793,7 +797,6 @@ body {
     .btn-light {
         font-size: 16px;
         padding: 13px 28px;
-        width: 100%;
     }
 
     /* Footer */
