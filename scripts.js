@@ -123,25 +123,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
-// ── Video pill switching ──
-document.addEventListener('DOMContentLoaded', function () {
-    const videoPills = document.querySelectorAll('.video-pill');
-    const mainVideo  = document.getElementById('mainVideo');
-    if (!mainVideo) return;
-
-    videoPills.forEach(function (pill) {
-        pill.addEventListener('click', function () {
-            videoPills.forEach(function (p) { p.classList.remove('active'); });
-            this.classList.add('active');
-            const source = mainVideo.querySelector('source');
-            if (source) {
-                source.src = 'assets/videos/' + this.getAttribute('data-video') + '.mp4';
-            } else {
-                mainVideo.src = 'assets/videos/' + this.getAttribute('data-video') + '.mp4';
-            }
-            mainVideo.load();
-            mainVideo.play().catch(function () {});
-        });
-    });
-});
