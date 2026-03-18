@@ -689,6 +689,16 @@ body {
         border-radius: 12px;
     }
 
+    .lightbox-trigger {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .lightbox-trigger:hover {
+        transform: none;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
     .hero-title {
         font-size: 28px;
         margin-bottom: 16px;
@@ -780,9 +790,13 @@ body {
         padding: 0 20px 18px;
     }
 
-    /* CTA */
+    /* CTA — reduce wave height so button fits inside purple */
+    .cta-section .wave-top {
+        height: 72px;
+    }
+
     .cta-section {
-        padding: 140px 0 64px;
+        padding: 100px 0 72px;
     }
 
     .cta-content h2 {

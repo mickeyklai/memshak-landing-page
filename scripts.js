@@ -6,7 +6,11 @@
         const closeBtn = document.getElementById('lightboxClose');
         if (!trigger || !overlay) return;
 
-        function open()  { overlay.classList.add('open');    document.body.style.overflow = 'hidden'; }
+        function open()  {
+            if (window.innerWidth <= 1024) return;
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
         function close() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
 
         trigger.addEventListener('click', open);
