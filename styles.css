@@ -47,17 +47,22 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+    min-width: 0;
 }
 
 .logo {
     height: 40px;
     width: auto;
+    flex-shrink: 0;
 }
 
 .logo-group {
     display: flex;
     align-items: center;
     gap: 16px;
+    min-width: 0;
+    flex-shrink: 1;
 }
 
 .logo-tagline {
@@ -72,6 +77,7 @@ body {
     display: flex;
     gap: 32px;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .btn-nav {
@@ -519,17 +525,6 @@ body {
     line-height: 1.8;
 }
 
-@media (max-width: 768px) {
-    .faq-question {
-        font-size: 16px;
-        padding: 20px 20px;
-    }
-
-    .faq-answer p {
-        padding: 0 20px 20px;
-    }
-}
-
 /* CTA Section */
 .cta-section {
     position: relative;
@@ -645,11 +640,17 @@ body {
 
 
 /* Responsive Design */
+
+/* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
+    /* Hide tagline early — it overflows before 768px */
+    .logo-tagline {
+        display: none;
+    }
 
     .hero-grid {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 36px;
     }
 
     .mockup {
@@ -657,7 +658,7 @@ body {
     }
 
     .hero-title {
-        font-size: 44px;
+        font-size: 40px;
     }
 
     .benefits-grid,
@@ -666,25 +667,49 @@ body {
     }
 }
 
+/* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
-    .nav {
+    /* Header */
+    .btn-nav {
+        padding: 9px 18px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* Hero — hide screenshot, keep text clean */
+    .hero {
+        padding: 48px 0 100px;
+    }
+
+    .hero-image {
         display: none;
     }
 
-    .hero {
-        padding: 80px 0 140px;
-    }
-
     .hero-title {
-        font-size: 36px;
+        font-size: 28px;
+        margin-bottom: 16px;
     }
 
     .hero-value-prop {
-        font-size: 20px;
+        font-size: 18px;
+        display: block;
+        padding: 8px 16px;
+        margin-bottom: 14px;
     }
 
     .hero-subtitle {
-        font-size: 18px;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .hero-features {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 16px;
+        margin-bottom: 24px;
+    }
+
+    .hero-feature {
+        font-size: 14px;
     }
 
     .hero-cta {
@@ -696,22 +721,120 @@ body {
         width: 100%;
     }
 
+    /* Sections */
     .section-title {
-        font-size: 36px;
+        font-size: 26px;
+        margin-bottom: 32px;
+    }
+
+    .video-demo {
+        padding: 52px 0;
+    }
+
+    .video-demo .section-subtitle {
+        font-size: 15px;
+        margin-top: -12px;
+        margin-bottom: 28px;
+    }
+
+    .benefits {
+        padding: 52px 0;
+    }
+
+    .benefit-card {
+        padding: 24px 20px;
+    }
+
+    .benefit-card h3 {
+        font-size: 18px;
+    }
+
+    .testimonials {
+        padding: 52px 0;
+    }
+
+    .testimonial {
+        padding: 24px 20px;
     }
 
     .benefits-grid,
     .testimonials-grid {
         grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .faq {
+        padding: 52px 0;
+    }
+
+    .faq-question {
+        font-size: 16px;
+        padding: 18px 20px;
+    }
+
+    .faq-answer p {
+        padding: 0 20px 18px;
+    }
+
+    /* CTA */
+    .cta-section {
+        padding: 110px 0 64px;
     }
 
     .cta-content h2 {
-        font-size: 36px;
+        font-size: 26px;
+    }
+
+    .cta-content p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .btn-light {
+        font-size: 16px;
+        padding: 13px 28px;
+        width: 100%;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 44px 0 20px;
     }
 
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .footer-bottom p {
+        font-size: 12px;
+        line-height: 2;
+    }
+}
+
+/* ── Small phones (≤480px) ── */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .hero-value-prop {
+        font-size: 16px;
+    }
+
+    .hero-features {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .section-title {
+        font-size: 22px;
+        margin-bottom: 28px;
+    }
+
+    .cta-content h2 {
+        font-size: 22px;
     }
 }
 
@@ -877,8 +1000,11 @@ body {
 }
 
 @media (max-width: 520px) {
-    .contact-modal { padding: 40px 24px 32px; }
+    .contact-overlay { padding: 12px; }
+    .contact-modal { padding: 40px 20px 28px; }
     .contact-modal-header h2 { font-size: 22px; }
+    .contact-modal-header { margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
 }
 
 /* ── Lightbox ── */
