@@ -37,10 +37,16 @@ body {
 .header {
     background: var(--bg-white);
     box-shadow: var(--shadow-sm);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
     padding: 16px 0;
+}
+
+body {
+    padding-top: 73px;
 }
 
 .header-content {
@@ -676,9 +682,13 @@ body {
         white-space: nowrap;
     }
 
-    /* Hero */
+    /* Hero — reduce wave height so button stays inside purple */
+    .hero .wave-bottom {
+        height: 64px;
+    }
+
     .hero {
-        padding: 48px 0 100px;
+        padding: 48px 0 88px;
     }
 
     .hero-image {
