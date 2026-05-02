@@ -5,7 +5,7 @@ const { getSanityClient } = require('../../lib/sanity');
 const SITE_ORIGIN = (
     process.env.SITE_ORIGIN ||
     process.env.URL ||
-    'https://memshak.co.il'
+    'https://www.maliapp.co.il'
 )
     .trim()
     .replace(/\/+$/, '');

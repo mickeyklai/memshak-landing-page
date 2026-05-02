@@ -12,7 +12,8 @@
     "packageJson": {
       "dependencies": [
         "npm:@sanity/client@^7.20.0",
-        "npm:@sanity/image-url@^2.1.1"
+        "npm:@sanity/image-url@^2.1.1",
+        "npm:mammoth@^1.12.0"
       ]
     }
   }

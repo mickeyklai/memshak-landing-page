@@ -3,7 +3,7 @@
  * Requires SANITY_PROJECT_ID; optional SANITY_DATASET, SANITY_API_VERSION, SITE_ORIGIN.
  */
 
-const DEFAULT_ORIGIN = 'https://memshak.co.il';
+const DEFAULT_ORIGIN = 'https://www.maliapp.co.il';
 const ORG_NAME = 'מלי פלטפורמות תוכנה בע"מ';
 
 function escAttr(s) {

@@ -1,4 +1,4 @@
-# robots.txt for memshak.co.il
+# robots.txt for www.maliapp.co.il
 # Allow all search engines to crawl all content
 
 User-agent: *
@@ -10,7 +10,7 @@ Disallow: /.git/
 Disallow: /.claude/
 
 # Sitemap (production: Netlify serves dynamic XML — see netlify.toml + netlify/functions/sitemap.js)
-Sitemap: https://memshak.co.il/sitemap.xml
+Sitemap: https://www.maliapp.co.il/sitemap.xml
 
 # Crawl delay (optional - helps manage server load)
 Crawl-delay: 1

@@ -10,7 +10,7 @@
         return;
     }
 
-    var SITE_ORIGIN = 'https://memshak.co.il';
+    var SITE_ORIGIN = 'https://www.maliapp.co.il';
 
     function showStatus(msg, isError) {
         statusEl.hidden = false;

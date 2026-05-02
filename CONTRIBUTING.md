@@ -18,7 +18,7 @@ Logic (open/close/validation) stays in **`/scripts.js`** (loaded root-relative).
 
 ## Sanity & Netlify (blog)
 
-Copy **`.env.example`** → **`.env`** in the repo root and set **`SANITY_PROJECT_ID`**. Optional: **`SITE_ORIGIN`**, **`SANITY_DATASET`**.
+Copy **`.env.example`** → **`.env`** in the repo root. For automated posts (`npm run publish:daily-blog`), set the four keys listed there. For **Netlify** (blog read + sitemap/RSS), add **`SANITY_PROJECT_ID`** in site env and optional **`SITE_ORIGIN`** (see **`.env.example`** Netlify note).
 
 Studio: **`studio/.env`** with **`SANITY_STUDIO_PROJECT_ID`** (same project id — see **`studio/.env.example`**).
 
@@ -36,7 +36,7 @@ netlify dev
 
 ## Sitemap & RSS
 
-Production **`https://memshak.co.il/sitemap.xml`** is served by **Netlify** via **`netlify/functions/sitemap.js`** (`netlify.toml` redirect). Do not add a static `sitemap.xml` in this repo—it would confuse the setup. **`robots.txt`** keeps pointing crawlers at the live **`/sitemap.xml`** URL.
+Production **`https://www.maliapp.co.il/sitemap.xml`** is served by **Netlify** via **`netlify/functions/sitemap.js`** (`netlify.toml` redirect). Do not add a static `sitemap.xml` in this repo—it would confuse the setup. **`robots.txt`** keeps pointing crawlers at the live **`/sitemap.xml`** URL.
 
 ## Paths
 

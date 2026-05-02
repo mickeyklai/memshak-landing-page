@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity';
 
-const SITE_ORIGIN = 'https://memshak.co.il';
+const SITE_ORIGIN = 'https://www.maliapp.co.il';
 
 export const post = defineType({
   name: 'post',

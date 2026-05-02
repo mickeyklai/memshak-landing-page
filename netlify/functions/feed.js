@@ -5,7 +5,7 @@ const { getSanityClient } = require('../../lib/sanity');
 const SITE_ORIGIN = (
     process.env.SITE_ORIGIN ||
     process.env.URL ||
-    'https://memshak.co.il'
+    'https://www.maliapp.co.il'
 )
     .trim()
     .replace(/\/+$/, '');
@@ -127,7 +127,7 @@ exports.handler = async function handler(event) {
         '    <copyright>© מלי פלטפורמות תוכנה בע&quot;מ</copyright>',
         '    <ttl>60</ttl>',
         `    <lastBuildDate>${escapeXml(lastBuild)}</lastBuildDate>`,
-        `    <generator>memshak.co.il</generator>`,
+        `    <generator>www.maliapp.co.il</generator>`,
         '    <image>',
         `      <url>${escapeXml(channelImage)}</url>`,
         `      <title>${escapeXml('מלי — בלוג')}</title>`,

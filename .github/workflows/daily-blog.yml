@@ -1,0 +1,45 @@
+# Schedules Hebrew blog posts: Groq → Hugging Face image → Sanity `post`.
+# Repo secrets (only): SANITY_PROJECT_ID, SANITY_API_WRITE_TOKEN, GROQ_API_KEY, HF_TOKEN
+# Manual date: workflow_dispatch optional input `blog_run_date` → BLOG_RUN_DATE
+
+name: Daily blog
+
+on:
+  schedule:
+    - cron: '20 6 * * *' # ~08:20 Israel summer (UTC+3); adjust as needed
+  workflow_dispatch:
+    inputs:
+      blog_run_date:
+        description: 'Optional slug date YYYY-MM-DD (backfill)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-blog-maliapp
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish post to Sanity
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          BLOG_RUN_DATE: ${{ github.event.inputs.blog_run_date }}
+        run: npm run publish:daily-blog
