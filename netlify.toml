@@ -1,0 +1,44 @@
+[build]
+  command = "npm install && npm run build"
+  publish = "."
+  functions = "netlify/functions"
+
+[[edge_functions]]
+  path = "/blog/*"
+  function = "inject-blog-og"
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/sitemap"
+  status = 200
+
+[[redirects]]
+  from = "/feed.xml"
+  to = "/.netlify/functions/feed"
+  status = 200
+
+[[redirects]]
+  from = "/rss.xml"
+  to = "/.netlify/functions/feed"
+  status = 200
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/blog/post.html"
+  status = 200
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=300, s-maxage=300"
+
+[[headers]]
+  for = "/feed.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=300, s-maxage=300"

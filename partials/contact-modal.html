@@ -1,0 +1,50 @@
+<div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-labelledby="contactModalHeading" aria-hidden="true">
+    <div class="contact-modal">
+        <button class="contact-close" id="contactClose" aria-label="סגור">&times;</button>
+
+        <div id="contactFormWrap">
+            <div class="contact-modal-header">
+                <div class="contact-modal-icon">
+                    <span class="material-symbols-rounded">calendar_month</span>
+                </div>
+                <h2 id="contactModalHeading">קבעו הדגמה חינם</h2>
+                <p>נחזור אליכם תוך יום עסקים</p>
+            </div>
+            <form id="contactForm" action="https://formspree.io/f/xaqpekpn" method="POST" novalidate>
+                <div class="form-group">
+                    <label for="fullName">שם מלא <span class="req">*</span></label>
+                    <input type="text" id="fullName" name="שם מלא" placeholder="ישראל ישראלי" required>
+                    <span class="field-error">נא למלא שם מלא</span>
+                </div>
+                <div class="form-group">
+                    <label for="phone">טלפון <span class="req">*</span></label>
+                    <input type="tel" id="phone" name="טלפון" placeholder="0501234567" required>
+                    <span class="field-error">נא למלא מספר טלפון ישראלי תקין (לדוגמה: 0501234567)</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">אימייל <span class="req">*</span></label>
+                    <input type="email" id="email" name="אימייל" placeholder="you@example.com" required>
+                    <span class="field-error">נא למלא כתובת אימייל תקינה</span>
+                </div>
+                <div class="form-group">
+                    <label for="officeName">שם משרד <span class="req">*</span></label>
+                    <input type="text" id="officeName" name="שם משרד" placeholder="משרד עורכי דין כהן" required>
+                    <span class="field-error">נא למלא שם משרד</span>
+                </div>
+                <button type="submit" class="contact-submit" id="submitBtn">
+                    <span id="submitText">שליחה </span>
+                    <span id="submitSpinner" style="display:none">שולח...</span>
+                </button>
+            </form>
+        </div>
+
+        <div id="contactSuccess" style="display:none" class="contact-success">
+            <div class="success-icon">
+                <span class="material-symbols-rounded">check_circle</span>
+            </div>
+            <h2>תודה! קיבלנו את הפרטים</h2>
+            <p>נחזור אליכם בהקדם לתיאום ההדגמה</p>
+            <button type="button" onclick="closeContactModal()" class="btn-close-success">סגור</button>
+        </div>
+    </div>
+</div>

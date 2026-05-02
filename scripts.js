@@ -27,26 +27,113 @@
 })();
 
 // ── Contact Modal ──
-function openContactModal() {
-    document.getElementById('contactOverlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
+let contactModalLastFocus = null;
+let contactModalTrapFn = null;
+
+function getContactOverlay() {
+    return document.getElementById('contactOverlay');
 }
+
+function contactModalSubtreeHidden(el, overlay) {
+    var style = window.getComputedStyle(el);
+    if (style.display === 'none' || style.visibility === 'hidden') return true;
+    var p = el.parentElement;
+    while (p && p !== overlay) {
+        var ps = window.getComputedStyle(p);
+        if (ps.display === 'none') return true;
+        p = p.parentElement;
+    }
+    return false;
+}
+
+/** Focusable controls inside the open modal for Tab wrapping. */
+function getContactModalFocusables(overlay) {
+    var modal = overlay.querySelector('.contact-modal');
+    var root = modal || overlay;
+    var sel =
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(root.querySelectorAll(sel)).filter(function (el) {
+        return overlay.contains(el) && !el.hasAttribute('hidden') && !contactModalSubtreeHidden(el, overlay);
+    });
+}
+
+function openContactModal() {
+    const overlay = getContactOverlay();
+    if (!overlay || overlay.classList.contains('open')) return;
+
+    contactModalLastFocus = document.activeElement;
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    requestAnimationFrame(function () {
+        var first =
+            document.getElementById('fullName') || overlay.querySelector('button:not([disabled]), input');
+        if (first && typeof first.focus === 'function') first.focus();
+    });
+
+    contactModalTrapFn = function (e) {
+        if (e.key !== 'Tab') return;
+        const list = getContactModalFocusables(overlay);
+        if (list.length === 0) return;
+        const firstEl = list[0];
+        const lastEl = list[list.length - 1];
+        if (e.shiftKey) {
+            if (document.activeElement === firstEl) {
+                e.preventDefault();
+                lastEl.focus();
+            }
+        } else {
+            if (document.activeElement === lastEl) {
+                e.preventDefault();
+                firstEl.focus();
+            }
+        }
+    };
+    overlay.addEventListener('keydown', contactModalTrapFn);
+}
+
 function closeContactModal() {
-    document.getElementById('contactOverlay').classList.remove('open');
+    const overlay = getContactOverlay();
+    if (!overlay || !overlay.classList.contains('open')) return;
+
+    if (contactModalTrapFn) {
+        overlay.removeEventListener('keydown', contactModalTrapFn);
+        contactModalTrapFn = null;
+    }
+
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+
+    if (contactModalLastFocus && typeof contactModalLastFocus.focus === 'function') {
+        try {
+            contactModalLastFocus.focus();
+        } catch (e) {
+            /* stale element reference */
+        }
+    }
+    contactModalLastFocus = null;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const overlay    = document.getElementById('contactOverlay');
-    const closeBtn   = document.getElementById('contactClose');
-    const form       = document.getElementById('contactForm');
-    const submitBtn  = document.getElementById('submitBtn');
+    const overlay = document.getElementById('contactOverlay');
+    const closeBtn = document.getElementById('contactClose');
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
     const submitText = document.getElementById('submitText');
     const submitSpinner = document.getElementById('submitSpinner');
 
+    if (!overlay || !closeBtn || !form || !submitBtn || !submitText || !submitSpinner) {
+        return;
+    }
+
     closeBtn.addEventListener('click', closeContactModal);
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeContactModal(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeContactModal(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (overlay.classList.contains('open')) closeContactModal();
+    });
 
     // Clear error as soon as the user starts typing
     form.querySelectorAll('input[required]').forEach(function (input) {
@@ -107,6 +194,15 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('שגיאה בשליחה, נסו שוב או פנו אלינו ישירות.');
         }
     });
+
+    if (new URLSearchParams(window.location.search).get('demo') === '1') {
+        openContactModal();
+        try {
+            history.replaceState({}, '', window.location.pathname || '/');
+        } catch (e) {
+            /* ignore */
+        }
+    }
 });
 
 // ── FAQ Accordion ──

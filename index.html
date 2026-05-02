@@ -8,6 +8,7 @@
         content="מלי - מערכת ניהול מקצועית לתיקי ביטוח לאומי. ניהול לקוחות, מסמכים, ועדות ותשלומים במקום אחד.">
     <meta name="facebook-domain-verification" content="kit9p3g8g2owv2wwgm7kix8utla0j5">
     <title>מלי - ניהול תיקי ביטוח לאומי במקום אחד</title>
+    <link rel="alternate" type="application/rss+xml" title="מלי — בלוג" href="https://www.maliapp.co.il/feed.xml">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -404,7 +405,8 @@
                     <p>מערכת המייצגים המובילה לניהול תיקי ביטוח לאומי בישראל</p>
                 </div>
                 <div class="footer-links">
-                    <h4>צור קשר</h4>
+                    <h4>קישורים</h4>
+                    <p><a href="/blog/" style="color:inherit;text-decoration:underline;">בלוג</a></p>
                     <p><a href="mailto:mali.help.app@gmail.com" style="color:inherit;text-decoration:underline;">שלחו לנו מייל</a></p>
                 </div>
             </div>
@@ -414,18 +416,17 @@
         </div>
     </footer>
 
-    <!-- Contact Form Modal -->
-    <div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-label="טופס יצירת קשר">
+    <!-- @partial contact-modal.html -->
+    <div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-labelledby="contactModalHeading" aria-hidden="true">
         <div class="contact-modal">
             <button class="contact-close" id="contactClose" aria-label="סגור">&times;</button>
-
-            <!-- Default form state -->
+    
             <div id="contactFormWrap">
                 <div class="contact-modal-header">
                     <div class="contact-modal-icon">
                         <span class="material-symbols-rounded">calendar_month</span>
                     </div>
-                    <h2>קבעו הדגמה חינם</h2>
+                    <h2 id="contactModalHeading">קבעו הדגמה חינם</h2>
                     <p>נחזור אליכם תוך יום עסקים</p>
                 </div>
                 <form id="contactForm" action="https://formspree.io/f/xaqpekpn" method="POST" novalidate>
@@ -455,18 +456,18 @@
                     </button>
                 </form>
             </div>
-
-            <!-- Success state -->
+    
             <div id="contactSuccess" style="display:none" class="contact-success">
                 <div class="success-icon">
                     <span class="material-symbols-rounded">check_circle</span>
                 </div>
                 <h2>תודה! קיבלנו את הפרטים</h2>
                 <p>נחזור אליכם בהקדם לתיאום ההדגמה</p>
-                <button onclick="closeContactModal()" class="btn-close-success">סגור</button>
+                <button type="button" onclick="closeContactModal()" class="btn-close-success">סגור</button>
             </div>
         </div>
     </div>
+    <!-- @/partial contact-modal.html -->
 
     <!-- Lightbox Modal -->
     <div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="תצוגת מסך מוגדלת">
@@ -495,7 +496,7 @@
         </div>
     </div>
 
-    <script src="scripts.js"></script>
+    <script src="/scripts.js"></script>
 </body>
 
 </html>

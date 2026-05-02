@@ -9,7 +9,7 @@ Disallow: /admin/
 Disallow: /.git/
 Disallow: /.claude/
 
-# Sitemap location
+# Sitemap (production: Netlify serves dynamic XML — see netlify.toml + netlify/functions/sitemap.js)
 Sitemap: https://memshak.co.il/sitemap.xml
 
 # Crawl delay (optional - helps manage server load)
