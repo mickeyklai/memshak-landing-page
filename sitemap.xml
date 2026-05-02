@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+    <!-- Homepage -->
+    <url>
+        <loc>https://memshak.co.il/</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://memshak.co.il/assets/images/memshak-screenshot.png</image:loc>
+            <image:title>מערכת מלי - ממשק ניהול תיקי ביטוח לאומי למייצגים</image:title>
+            <image:caption>מערכת מייצגים לניהול תיקי ביטוח לאומי</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://memshak.co.il/assets/images/logo.png</image:loc>
+            <image:title>מלי - מערכת מייצגים לביטוח לאומי</image:title>
+        </image:image>
+        <video:video>
+            <video:thumbnail_loc>https://memshak.co.il/assets/images/memshak-screenshot.png</video:thumbnail_loc>
+            <video:title>מערכת מלי בפעולה - הדגמה</video:title>
+            <video:description>סרטון הדגמה של מערכת מלי למייצגים בביטוח לאומי</video:description>
+            <video:content_loc>https://memshak.co.il/assets/videos/OpenVideo.mp4</video:content_loc>
+            <video:family_friendly>yes</video:family_friendly>
+        </video:video>
+    </url>
+
+    <!-- Benefits Section -->
+    <url>
+        <loc>https://memshak.co.il/#benefits</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- FAQ Section -->
+    <url>
+        <loc>https://memshak.co.il/#faq</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Testimonials Section -->
+    <url>
+        <loc>https://memshak.co.il/#testimonials</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Contact Section -->
+    <url>
+        <loc>https://memshak.co.il/#contact</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Terms of Use -->
+    <url>
+        <loc>https://memshak.co.il/assets/docs/terms-of-use.pdf</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- Privacy Policy -->
+    <url>
+        <loc>https://memshak.co.il/assets/docs/privacy-policy.pdf</loc>
+        <lastmod>2026-05-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+</urlset>

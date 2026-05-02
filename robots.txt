@@ -1,0 +1,16 @@
+# robots.txt for memshak.co.il
+# Allow all search engines to crawl all content
+
+User-agent: *
+Allow: /
+
+# Disallow crawling of specific directories (if any in the future)
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /.claude/
+
+# Sitemap location
+Sitemap: https://memshak.co.il/sitemap.xml
+
+# Crawl delay (optional - helps manage server load)
+Crawl-delay: 1
