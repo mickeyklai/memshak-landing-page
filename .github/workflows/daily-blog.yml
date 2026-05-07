@@ -42,5 +42,6 @@ jobs:
           SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          BLOG_REQUIRE_IMAGE: "true"
           BLOG_RUN_DATE: ${{ github.event.inputs.blog_run_date }}
         run: npm run publish:daily-blog

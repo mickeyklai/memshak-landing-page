@@ -12,7 +12,8 @@
  *
  * Flags: --dry-run, --stub (needs --dry-run), --next-slug, --no-image (never call HF)
  *
- * If HF image generation throws, the post is still created without mainImage (same as empty slots).
+ * By default, publishing requires a main image. If HF image generation/upload throws, the run fails
+ * (no post is created). To bypass images explicitly: pass `--no-image`.
  */
 
 'use strict';
@@ -305,6 +306,7 @@ function parseArgs(argv) {
         stub: argv.includes('--stub'),
         nextSlug: argv.includes('--next-slug'),
         noImage: argv.includes('--no-image'),
+        testImage: argv.includes('--test-image'),
     };
 }
 
@@ -842,9 +844,30 @@ function buildBodyWithImages(paragraphs, slots, contactUrl) {
     return body;
 }
 
+async function testHfImageOnly() {
+    const outDir = path.join(__dirname, '..', 'tmp');
+    fs.mkdirSync(outDir, { recursive: true });
+    const outPath = path.join(outDir, 'hf-test.png');
+
+    const prompt =
+        process.env.BLOG_TEST_IMAGE_PROMPT ||
+        'clean modern office desk, anonymized folders (no readable text), laptop with blurred dashboard, daylight, trustworthy corporate mood';
+
+    console.log('[publish-daily-blog] --test-image: generating one HF image…');
+    const buf = await generateHfImageJpeg(prompt);
+    fs.writeFileSync(outPath, buf);
+    console.log('[publish-daily-blog] --test-image: wrote', outPath, `(${buf.length} bytes)`);
+}
+
 async function main() {
-    const { dryRun, stub, nextSlug, noImage } = parseArgs(process.argv.slice(2));
-    const requireImage = sanitizeSecretEnv(process.env.BLOG_REQUIRE_IMAGE).toLowerCase() === 'true';
+    const { dryRun, stub, nextSlug, noImage, testImage } = parseArgs(process.argv.slice(2));
+
+    if (testImage) {
+        await testHfImageOnly();
+        process.exit(0);
+    }
+    // Default: require image unless explicitly disabled.
+    const requireImage = sanitizeSecretEnv(process.env.BLOG_REQUIRE_IMAGE).toLowerCase() !== 'false';
     const runDate = process.env.BLOG_RUN_DATE || utcDateString();
     const outline = await resolveTopicOutline(runDate);
     const topicSlug = outline.topicSlug;
