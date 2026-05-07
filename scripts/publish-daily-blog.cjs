@@ -8,7 +8,7 @@
  * `--next-slug`: force a new slug for the same day (`…-slug-2`, `…-3`, …).
  * Optional date override: env `BLOG_RUN_DATE=YYYY-MM-DD` (manual run / cron).
  *
- * Topics: scans data/*.docx and ~/Downloads/מלי_50_פוסטים.docx; else rotates built-in slug list.
+ * Topics: rotates built-in slug list (no filesystem topic files).
  *
  * Flags: --dry-run, --stub (needs --dry-run), --next-slug, --no-image (never call HF)
  *
@@ -260,42 +260,22 @@ function slugSegmentFromDocSeed(seedText, outlineIndexZeroBased) {
 }
 
 /**
- * Chooses DOCX-backed seed when ideas exist; falls back to built-in slug list for idempotency.
+ * Chooses topic from built-in slug list for idempotency.
  * @returns {Promise<{topicSlug:string, seedIdeaText:string, outlineIndex:number, outlineTotal:number, topicSource:string}>}
  */
 async function resolveTopicOutline(runDate) {
-    const { ideas, sourceBasename, rawChars, triedNames } = await extractIdeasFromDocxFilesystem();
-    const useDoc = ideas.length > 0;
-    const len = useDoc ? ideas.length : TOPIC_SLUGS.length;
+    const len = TOPIC_SLUGS.length;
     const idx = rotatingDayIndex(runDate, len);
-
-    let topicSlug;
-    let seedIdeaText;
-    if (useDoc) {
-        seedIdeaText = ideas[idx] || '';
-        topicSlug = slugSegmentFromDocSeed(seedIdeaText, idx);
-    } else {
-        seedIdeaText = '';
-        topicSlug = TOPIC_SLUGS[idx];
-    }
+    const seedIdeaText = '';
+    const topicSlug = TOPIC_SLUGS[idx];
 
     const plan = {
         topicSlug,
         seedIdeaText,
         outlineIndex: idx,
         outlineTotal: len,
-        topicSource: useDoc ? `docx:${sourceBasename || 'unknown'}` : 'fallback-topics-array',
+        topicSource: 'topics-array',
     };
-
-    if (useDoc) {
-        console.log(
-            `[publish-daily-blog] Topic doc: ${sourceBasename} — ${ideas.length} ideas, using row ${idx + 1}/${len}`,
-        );
-    } else {
-        console.warn(
-            '[publish-daily-blog] No .docx topic file found — using built-in TOPIC_SLUGS. Add data/blog-topics.docx or מלי_50_פוסטים.docx under data/, or place מלי_50_פוסטים.docx in Downloads.',
-        );
-    }
 
     return plan;
 }
@@ -710,35 +690,73 @@ ${outlineMode ? heroImageSpecOutline : heroImageSpecListicle}
 
 החזירו רק את אובייקט ה-JSON, ללא markdown.`;
 
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            model,
-            temperature: 0.65,
-            max_tokens: 6144,
-            response_format: { type: 'json_object' },
-            messages: [
-                {
-                    role: 'system',
-                    content: 'Reply with one valid JSON object only. Hebrew user-facing strings. No markdown.',
-                },
-                { role: 'user', content: prompt },
-            ],
-        }),
-    });
+    async function groqCall(attempt) {
+        const strictSystem =
+            'You MUST output a single valid JSON object only. ' +
+            'No markdown. No code fences. Do not wrap in ```json. ' +
+            'Output must start with { and end with }. Hebrew user-facing strings.';
+        const strictUser =
+            prompt +
+            '\n\nאילוץ טכני: הפלט חייב להתחיל בתו { ולהסתיים בתו } בלבד. בלי ``` ובלי טקסט מסביב.';
 
-    if (!res.ok) {
-        const errText = await res.text().catch(() => '');
-        throw new Error(`Groq ${res.status}: ${errText.slice(0, 400)}`);
+        const useResponseFormat = attempt === 1; // If Groq rejects json_object, fallback to plain completion.
+        const temperature = attempt === 1 ? 0.55 : attempt === 2 ? 0.25 : 0.15;
+
+        const body = {
+            model,
+            temperature,
+            max_tokens: 6144,
+            messages: [
+                { role: 'system', content: strictSystem },
+                { role: 'user', content: strictUser },
+            ],
+        };
+        if (useResponseFormat) {
+            body.response_format = { type: 'json_object' };
+        }
+
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (!res.ok) {
+            const errText = await res.text().catch(() => '');
+            const clipped = errText.slice(0, 700);
+            const hint =
+                res.status === 400 && /json_validate_failed|Failed to generate JSON/i.test(errText)
+                    ? ' (Groq json_validate_failed; retrying with stricter settings)'
+                    : '';
+            const err = new Error(`Groq ${res.status}: ${clipped}${hint}`);
+            err._groqStatus = res.status;
+            err._groqBody = errText;
+            throw err;
+        }
+
+        const data = await res.json();
+        const content = data.choices?.[0]?.message?.content;
+        return JSON.parse(stripJsonFence(content));
     }
 
-    const data = await res.json();
-    const content = data.choices?.[0]?.message?.content;
-    const parsed = JSON.parse(stripJsonFence(content));
+    let parsed;
+    let lastErr;
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+        try {
+            parsed = await groqCall(attempt);
+            break;
+        } catch (e) {
+            lastErr = e;
+            if (attempt < 3) {
+                await new Promise((r) => setTimeout(r, 1200 * attempt));
+                continue;
+            }
+        }
+    }
+    if (!parsed) throw lastErr || new Error('Groq failed');
 
     if (!parsed.title || !Array.isArray(parsed.paragraphs)) {
         throw new Error('Groq JSON missing title or paragraphs');
@@ -884,10 +902,18 @@ async function main() {
             if (!dryRun) throw e;
         }
     }
+    if (!dryRun) {
+        const pid = sanitizeSecretEnv(process.env.SANITY_PROJECT_ID);
+        console.log(`[publish-daily-blog] Sanity: projectId=${pid || '(missing)'} dataset=production`);
+    }
 
     const { slug: slugCurrent, shouldSkip } = await resolveSlugForRun(client, baseSlug, multiplePerDay);
     if (shouldSkip) {
-        console.log(dryRun ? '[dry-run] Post exists — skip.' : 'Post exists — idempotent exit.');
+        console.log(
+            dryRun
+                ? `[dry-run] Post exists — skip (slug ${slugCurrent}).`
+                : `[publish-daily-blog] Post exists — idempotent exit (slug ${slugCurrent}).`,
+        );
         process.exit(0);
     }
 
