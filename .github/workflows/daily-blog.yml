@@ -1,5 +1,6 @@
 # Schedules Hebrew blog posts: Groq → Hugging Face image → Sanity `post`.
-# Repo secrets (only): SANITY_PROJECT_ID, SANITY_API_WRITE_TOKEN, GROQ_API_KEY, HF_TOKEN
+# Repo secrets (Settings → Secrets and variables → Actions): SANITY_PROJECT_ID, SANITY_API_WRITE_TOKEN, GROQ_API_KEY, HF_TOKEN
+# HF_TOKEN must allow Inference Providers (same as local); .env is never deployed — CI only sees these secrets.
 # Manual date: workflow_dispatch optional input `blog_run_date` → BLOG_RUN_DATE
 
 name: Daily blog

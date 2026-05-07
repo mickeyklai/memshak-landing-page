@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Daily blog: one Sanity `post` per run — Hebrew body (Groq), one mainImage (HF classic inference API).
+ * Daily blog: one Sanity `post` per run — Hebrew body (Groq), one mainImage (HF Inference Providers text-to-image).
  *
  * Required env only: SANITY_PROJECT_ID, SANITY_API_WRITE_TOKEN, GROQ_API_KEY, HF_TOKEN
  *
@@ -20,6 +20,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { InferenceClient } = require('@huggingface/inference');
 
 function loadEnvFiles() {
     const root = path.join(__dirname, '..');
@@ -57,7 +58,8 @@ loadEnvFiles();
 const SITE_PUBLIC_URL = 'https://www.maliapp.co.il';
 const CONTACT_SECTION_URL = `${SITE_PUBLIC_URL}/#contact`;
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
-const HF_IMAGE_MODEL = 'stabilityai/sdxl-turbo';
+/** Routed via Inference Providers (`provider: auto`); not served on legacy hf-inference-only paths. */
+const HF_IMAGE_MODEL = 'black-forest-labs/FLUX.1-schnell';
 
 const crypto = require('crypto');
 const { createClient } = require('@sanity/client');
@@ -308,7 +310,7 @@ function parseArgs(argv) {
 
 function envFileHint() {
     const root = path.join(__dirname, '..');
-    return `Secrets: ${path.join(root, '.env.local')} (copy from .env.example). From repo root: npm run publish:daily-blog`;
+    return `Local: copy .env.example → ${path.join(root, '.env')} (optional ${path.join(root, '.env.local')}). CI: set repo Secrets SANITY_*, GROQ_API_KEY, HF_TOKEN. Then: npm run publish:daily-blog`;
 }
 
 function sanitizeSecretEnv(s) {
@@ -374,46 +376,26 @@ function enhanceImagePrompt(raw) {
     return `${HF_STYLE_PREFIX}${core}${HF_STYLE_SUFFIX}`;
 }
 
-/** Model path keeps `/` between org and repo; encode each segment only. */
-function hfInferenceModelPostUrl(model) {
-    const path = String(model || '')
-        .split('/')
-        .filter(Boolean)
-        .map((seg) => encodeURIComponent(seg))
-        .join('/');
-    return `https://router.huggingface.co/hf-inference/models/${path}`;
-}
-
-/** Hub text-to-image via hf-inference router (replaces deprecated api-inference host). */
-async function hfClassicTextToImageBuffer(token, model, inputs, parameters) {
-    const url = hfInferenceModelPostUrl(model);
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ inputs, parameters }),
-    });
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (!res.ok) {
-        let detail = '';
-        try {
-            if (buf.length > 2 && buf[0] === 0x7b) {
-                const j = JSON.parse(buf.toString('utf8'));
-                detail = typeof j.error === 'string' ? j.error : JSON.stringify(j);
-            } else {
-                detail = buf.toString('utf8').slice(0, 400);
-            }
-        } catch (_) {
-            detail = buf.toString('utf8').slice(0, 400);
-        }
-        throw new Error(`HF classic ${res.status}: ${detail.slice(0, 320)}`);
+/** Text-to-image via Hugging Face Inference Providers (avoids hf-inference-only models like SDXL-turbo). */
+async function hfProvidersTextToImageBuffer(token, inputs, parameters) {
+    const client = new InferenceClient(token);
+    let blob;
+    try {
+        blob = await client.textToImage({
+            model: HF_IMAGE_MODEL,
+            inputs,
+            provider: 'auto',
+            parameters,
+        });
+    } catch (e) {
+        const msg = e && e.message ? String(e.message) : String(e);
+        throw new Error(`HF inference providers: ${msg.slice(0, 400)}`);
     }
-    if (buf.length < 256) throw new Error('HF classic returned an empty or too-small response');
+    const buf = Buffer.from(await blob.arrayBuffer());
+    if (buf.length < 256) throw new Error('HF image returned an empty or too-small response');
     if (buf[0] === 0x7b) {
         const j = JSON.parse(buf.toString('utf8'));
-        if (j && typeof j.error === 'string') throw new Error(`HF classic: ${j.error}`);
+        if (j && typeof j.error === 'string') throw new Error(`HF image: ${j.error}`);
     }
     return buf;
 }
@@ -423,7 +405,7 @@ async function generateHfImageJpeg(imagePrompt) {
     if (!hfToken) throw new Error('HF_TOKEN is not set');
     const inputs = enhanceImagePrompt(imagePrompt);
     const parameters = {
-        num_inference_steps: 5,
+        num_inference_steps: 4,
         width: 1216,
         height: 832,
         negative_prompt: HF_NEGATIVE_PROMPT,
@@ -431,7 +413,7 @@ async function generateHfImageJpeg(imagePrompt) {
     let lastErr;
     for (let attempt = 1; attempt <= 3; attempt += 1) {
         try {
-            return await hfClassicTextToImageBuffer(hfToken, HF_IMAGE_MODEL, inputs, parameters);
+            return await hfProvidersTextToImageBuffer(hfToken, inputs, parameters);
         } catch (e) {
             lastErr = e;
             if (attempt < 3) await new Promise((r) => setTimeout(r, 2500 * attempt));
@@ -440,9 +422,9 @@ async function generateHfImageJpeg(imagePrompt) {
     const msg = lastErr && lastErr.message;
     let hint =
         ' On hf.co/settings/tokens create or edit your token and enable “Inference API” permissions (including Inference Providers billing access if prompted). Until then use: npm run publish:daily-blog -- --no-image --next-slug';
-    if (msg && /inference\s*providers/i.test(msg)) {
+    if (msg && /inference\s*providers|hf-inference|Model not supported/i.test(msg)) {
         hint =
-            ' Your HF token cannot call Inference Providers yet. Hugging Face → Settings → Access Tokens → edit token → enable permissions for Inference API / Inference Providers (see hf.co/settings/tokens). Or publish without images: npm run publish:daily-blog -- --no-image --next-slug';
+            ' Your HF token needs Inference Providers (and credits where required). Hugging Face → Settings → Access Tokens → enable Inference API / Inference Providers (see hf.co/settings/tokens). Or publish without images: npm run publish:daily-blog -- --no-image --next-slug';
     }
     throw new Error(`HF image failed after 3 tries: ${msg}.${hint}`);
 }
@@ -532,9 +514,22 @@ async function resolveHeroImageSlots(client, runDate, dryRun, meta, heroSpecs, s
         const promptFor =
             (spec.imagePrompt && String(spec.imagePrompt).trim()) ||
             'wide modern open office, blurred laptop screen showing generic charts, neatly stacked anonymized folders, plants, daylight';
-        const buf = await generateHfImageJpeg(promptFor);
-        const filename = seoBlogImageFilename(slugCurrent, 'jpg', i + 1);
-        const doc = await client.assets.upload('image', buf, { filename });
+        let buf;
+        try {
+            buf = await generateHfImageJpeg(promptFor);
+        } catch (e) {
+            const msg = e && e.message ? String(e.message) : String(e);
+            throw new Error(`HF image generation failed (slot ${i + 1}/${totalSlots}): ${msg}`);
+        }
+
+        const filename = seoBlogImageFilename(slugCurrent, 'png', i + 1);
+        let doc;
+        try {
+            doc = await client.assets.upload('image', buf, { filename });
+        } catch (e) {
+            const msg = e && e.message ? String(e.message) : String(e);
+            throw new Error(`Sanity asset upload failed (slot ${i + 1}/${totalSlots}): ${msg}`);
+        }
         slots.push({
             assetId: doc._id,
             attribution: figureCaptionFromMeta(spec.imageCaption, postTitle),
@@ -849,6 +844,7 @@ function buildBodyWithImages(paragraphs, slots, contactUrl) {
 
 async function main() {
     const { dryRun, stub, nextSlug, noImage } = parseArgs(process.argv.slice(2));
+    const requireImage = sanitizeSecretEnv(process.env.BLOG_REQUIRE_IMAGE).toLowerCase() === 'true';
     const runDate = process.env.BLOG_RUN_DATE || utcDateString();
     const outline = await resolveTopicOutline(runDate);
     const topicSlug = outline.topicSlug;
@@ -900,6 +896,7 @@ async function main() {
             slots = r.slots;
         } catch (imgErr) {
             if (dryRun) throw imgErr;
+            if (requireImage) throw imgErr;
             console.warn(
                 '[publish-daily-blog] Image generation failed; publishing post without mainImage.',
                 imgErr && imgErr.message,
