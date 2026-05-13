@@ -969,6 +969,17 @@ body {
     border-color: var(--purple-start);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
+@keyframes formShake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+.form-group.shake input,
+.form-group--checkbox.shake .form-checkbox-label {
+    animation: formShake 0.35s ease;
+}
 .field-error {
     display: none;
     font-size: 13px;
@@ -977,6 +988,40 @@ body {
 }
 .form-group.has-error .field-error { display: block; }
 .form-group.has-error input { border-color: #e53e3e; }
+
+.form-group--checkbox .form-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+    line-height: 1.45;
+    margin-bottom: 0;
+}
+.form-group--checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin: 3px 0 0;
+    padding: 0;
+    flex-shrink: 0;
+    accent-color: var(--purple-start);
+}
+.form-group--checkbox .field-error {
+    margin-top: 6px;
+}
+.form-group--checkbox.has-error .field-error {
+    display: block !important;
+}
+.form-group--checkbox.has-error input[type="checkbox"] {
+    box-shadow: 0 0 0 2px #e53e3e;
+    border-radius: 4px;
+}
+.form-group--checkbox.has-error .form-checkbox-label {
+    color: #c53030;
+}
 
 .contact-submit {
     width: 100%;
