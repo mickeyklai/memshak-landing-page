@@ -5,6 +5,7 @@ User-agent: *
 Allow: /
 
 # Disallow crawling of specific directories (if any in the future)
+Disallow: /download/
 Disallow: /admin/
 Disallow: /.git/
 Disallow: /.claude/

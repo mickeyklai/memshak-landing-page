@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>הורדת מלי | מערכת מייצגים לביטוח לאומי</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 48px 40px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo-wrap {
+            margin-bottom: 8px;
+        }
+
+        .logo-wrap img {
+            height: 52px;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
+            cursor: pointer;
+            border: none;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(40, 167, 69, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 28px;
+            text-align: right;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .feature-card .icon {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .feature-card strong {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .feature-card p {
+            font-size: 0.82rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .steps-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 24px;
+            text-align: right;
+            margin-bottom: 28px;
+        }
+
+        .steps-box h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .steps-box ol {
+            padding-right: 20px;
+            font-size: 0.9rem;
+            line-height: 1.9;
+            opacity: 0.9;
+        }
+
+        .steps-box ol code {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .footer-note {
+            font-size: 0.8rem;
+            opacity: 0.65;
+            line-height: 1.7;
+        }
+
+        .footer-note a {
+            color: #fff;
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 520px) {
+            .container {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-wrap">
+            <img src="/assets/images/logoWhite.png" alt="מלי" onerror="this.style.display='none'">
+        </div>
+
+        <h1>הורדת מלי</h1>
+        <p class="subtitle">
+            מערכת ניהול מידע ללקוחות מיוצגים בביטוח לאומי<br>
+            כל המידע של הלקוחות במקום אחד, בקליק אחד
+        </p>
+
+        <a id="download-link" href="#" class="download-btn">
+            בודק גרסה אחרונה...
+        </a>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">🔔</div>
+                <strong>התראות חכמות</strong>
+                <p>קבלו עדכונים בזמן אמת על שינויים בתיקים</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔍</div>
+                <strong>חיפוש וסינון מתקדמים</strong>
+                <p>מוצאים בדיוק מה שצריך במהירות ובקלות</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔄</div>
+                <strong>סנכרון אוטומטי</strong>
+                <p>המידע מתעדכן בצורה פשוטה, בלי לרדוף אחרי רפרש</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⏱️</div>
+                <strong>חיסכון בזמן ובכסף</strong>
+                <p>פחות עבודה ידנית, יותר יעילות למשרד</p>
+            </div>
+        </div>
+
+        <div class="steps-box">
+            <h3>📋 איך מתחילים?</h3>
+            <ol>
+                <li>לחצו על כפתור ההורדה למעלה</li>
+                <li>הריצו את קובץ ההתקנה שהורד (<code>Mali-Setup-x.x.x.exe</code>)</li>
+                <li>המערכת תעלה אוטומטית לאחר ההתקנה</li>
+                <li>עדכונים עתידיים מותקנים אוטומטית ברקע</li>
+            </ol>
+        </div>
+
+        <p class="footer-note">
+            <span id="version-display">בודק גרסה...</span> &nbsp;|&nbsp;
+            <a href="https://maliapp.co.il">אתר מלי</a>
+            &nbsp;|&nbsp;
+            © 2026 מלי פלטפורמות תוכנה בע"מ
+        </p>
+    </div>
+
+    <script>
+        const owner = 'mickeyklai';
+        const repo = 'memshak-deployment';
+
+        fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                const asset = data.assets.find(a =>
+                    a.name.endsWith('.exe') && !a.name.toLowerCase().includes('staging')
+                );
+
+                const btn = document.getElementById('download-link');
+                const verDisplay = document.getElementById('version-display');
+
+                if (asset) {
+                    btn.href = asset.browser_download_url;
+                    btn.textContent = `🚀 הורדת מלי (${data.tag_name})`;
+                    verDisplay.textContent = `גרסה אחרונה: ${data.tag_name}`;
+                } else {
+                    btn.textContent = '❌ לא נמצא קובץ התקנה בגרסה האחרונה';
+                    btn.style.background = '#dc3545';
+                    console.error('No .exe asset found in release:', data);
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching release:', err);
+                const btn = document.getElementById('download-link');
+                btn.textContent = '⚠️ שגיאה בבדיקת עדכונים – לחצו להורדה ידנית';
+                btn.href = `https://github.com/${owner}/${repo}/releases`;
+                btn.style.background = '#ffc107';
+                btn.style.color = '#000';
+            });
+    </script>
+</body>
+</html>
