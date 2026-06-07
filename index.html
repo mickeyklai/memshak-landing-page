@@ -69,7 +69,7 @@
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "5",
-            "reviewCount": "3"
+            "reviewCount": "5"
         },
         "provider": {
             "@type": "Organization",
@@ -459,43 +459,145 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials" aria-labelledby="testimonials-title">
+    <!-- Social proof — real WhatsApp messages -->
+    <section class="social-proof" id="testimonials" aria-labelledby="testimonials-title">
         <div class="container">
-            <h2 class="section-title" id="testimonials-title">מייצגים ועורכי דין בביטוח לאומי ממליצים על מלי</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial">
-                    <div class="testimonial-avatar">
-                        <div class="avatar-placeholder avatar-blue">ר.כ</div>
-                    </div>
-                    <p class="testimonial-text">"מאז שעברנו למלי, אנחנו חוסכים שעות כל שבוע. המערכת פשוט עובדת."</p>
-                    <div class="testimonial-author">
-                        <strong>עו"ד ר.כ.</strong>
-                        <span>שותפה במשרד עו"ד</span>
-                    </div>
+            <h2 class="section-title" id="testimonials-title">מייצגים שכבר עובדים עם מלי — במילים שלהם</h2>
+            <p class="section-subtitle social-proof__subtitle">ציטוטים מקוריים משיחות תמיכה אמיתיות. לא סקרים — מילים שכתבו לנו בזמן אמת.</p>
+
+            <div class="social-proof__carousel">
+                <button type="button" class="social-proof__arrow social-proof__arrow--prev"
+                    id="recommendationsPrev" aria-label="המלצה קודמת">
+                    <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+                </button>
+                <div class="social-proof__track" id="recommendationsTrack">
+
+                    <article class="proof-slide">
+                        <span class="proof-slide__tag">שביעות רצון מלאה</span>
+                        <div class="proof-slide__preview">
+                            <div class="wa-preview">
+                                <div class="wa-preview__bubble wa-preview__bubble--out wa-preview__bubble--faded"><span>הנה תראה דוגמא</span></div>
+                                <div class="wa-preview__bubble wa-preview__bubble--in wa-preview__bubble--featured">
+                                    <p>תוכנה מטורפת, אין ספק 🥳</p>
+                                    <p>אלופים אתם!!</p>
+                                    <time>10:25</time>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="proof-slide__author">
+                            <span class="proof-slide__avatar">י.ב</span>
+                            <div class="proof-slide__author-info">
+                                <span class="proof-slide__verified">
+                                    <span class="material-symbols-rounded" aria-hidden="true">verified</span>
+                                    הודעה מאומתת מ-WhatsApp
+                                </span>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="proof-slide">
+                        <span class="proof-slide__tag">ממליצים לקולגות</span>
+                        <div class="proof-slide__preview">
+                            <div class="wa-preview">
+                                <div class="wa-preview__bubble wa-preview__bubble--out wa-preview__bubble--faded"><span>הוספתי 400 קרדיטים…</span></div>
+                                <div class="wa-preview__bubble wa-preview__bubble--in wa-preview__bubble--featured">
+                                    <p>בינתיים תוכנה ליגה</p>
+                                    <p>אחרי שנתנסה כמובן אמליץ לקולגות שלנו</p>
+                                    <time>8:56</time>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="proof-slide__author">
+                            <span class="proof-slide__avatar">ג.כ</span>
+                            <div class="proof-slide__author-info">
+                                <span class="proof-slide__verified">
+                                    <span class="material-symbols-rounded" aria-hidden="true">verified</span>
+                                    הודעה מאומתת מ-WhatsApp
+                                </span>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="proof-slide">
+                        <span class="proof-slide__tag">התחלה מהירה</span>
+                        <div class="proof-slide__preview">
+                            <div class="wa-preview">
+                                <div class="wa-preview__bubble wa-preview__bubble--out wa-preview__bubble--faded"><span>הוספתי עוד 400 קרדיטים…</span></div>
+                                <div class="wa-preview__bubble wa-preview__bubble--in wa-preview__bubble--featured">
+                                    <p>ממחר לדעתי נוכל כבר להינות מהתוכנה.</p>
+                                    <p>אין כמוכם</p>
+                                    <time>18:03</time>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="proof-slide__author">
+                            <span class="proof-slide__avatar">מ.י</span>
+                            <div class="proof-slide__author-info">
+                                <span class="proof-slide__verified">
+                                    <span class="material-symbols-rounded" aria-hidden="true">verified</span>
+                                    הודעה מאומתת מ-WhatsApp
+                                </span>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="proof-slide">
+                        <span class="proof-slide__tag">חיסכון בזמן יומי</span>
+                        <div class="proof-slide__preview">
+                            <div class="wa-preview">
+                                <div class="wa-preview__bubble wa-preview__bubble--out wa-preview__bubble--faded"><span>כנסי למסך ההגדרות…</span></div>
+                                <div class="wa-preview__bubble wa-preview__bubble--in wa-preview__bubble--featured">
+                                    <p>תודה רבה</p>
+                                    <p>זה בטוח יקל לנו על החיים</p>
+                                    <time>8:07</time>
+                                </div>
+                                <div class="wa-preview__bubble wa-preview__bubble--out wa-preview__bubble--faded"><span>זו המטרה :)</span></div>
+                            </div>
+                        </div>
+                        <footer class="proof-slide__author">
+                            <span class="proof-slide__avatar">ש.ע</span>
+                            <div class="proof-slide__author-info">
+                                <span class="proof-slide__verified">
+                                    <span class="material-symbols-rounded" aria-hidden="true">verified</span>
+                                    הודעה מאומתת מ-WhatsApp
+                                </span>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="proof-slide">
+                        <span class="proof-slide__tag">שירות אישי ומהיר</span>
+                        <div class="proof-slide__preview">
+                            <div class="wa-preview">
+                                <div class="wa-preview__bubble wa-preview__bubble--out wa-preview__bubble--faded"><span>את יכולה להקים עוד 2 יוזרים…</span></div>
+                                <div class="wa-preview__bubble wa-preview__bubble--in wa-preview__bubble--featured">
+                                    <p>איזה אליפות</p>
+                                    <p>תענוג</p>
+                                    <time>8:59</time>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="proof-slide__author">
+                            <span class="proof-slide__avatar">מ.ל</span>
+                            <div class="proof-slide__author-info">
+                                <span class="proof-slide__verified">
+                                    <span class="material-symbols-rounded" aria-hidden="true">verified</span>
+                                    הודעה מאומתת מ-WhatsApp
+                                </span>
+                            </div>
+                        </footer>
+                    </article>
+
                 </div>
-                <div class="testimonial">
-                    <div class="testimonial-avatar">
-                        <div class="avatar-placeholder avatar-teal">מ.ל</div>
-                    </div>
-                    <p class="testimonial-text">"סוף סוף יש לי שליטה מלאה על כל התיקים. אני יודעת בדיוק מה קורה עם כל
-                        לקוח."</p>
-                    <div class="testimonial-author">
-                        <strong>עו"ד מ.ל.</strong>
-                        <span>מנהל משרד עו"ד</span>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <div class="testimonial-avatar">
-                        <div class="avatar-placeholder avatar-amber">י.א</div>
-                    </div>
-                    <p class="testimonial-text">"הסנכרון עם ביטוח לאומי חוסך לנו טעויות ועדכונים ידניים. זה פשוט משנה
-                        משחק."</p>
-                    <div class="testimonial-author">
-                        <strong>גב' י.א.</strong>
-                        <span>מסייעת בהגשת תביעות</span>
-                    </div>
-                </div>
+                <button type="button" class="social-proof__arrow social-proof__arrow--next"
+                    id="recommendationsNext" aria-label="המלצה הבאה">
+                    <span class="material-symbols-rounded" aria-hidden="true">chevron_left</span>
+                </button>
+            </div>
+
+            <div class="social-proof__footer">
+                <p class="social-proof__note">פרטים מזהים הוסתרו לשמירה על פרטיות הלקוחות</p>
+                <button type="button" onclick="openContactModal()" class="btn btn-primary social-proof__cta">קבעו הדגמה חינם — הצטרפו למשרדים המרוצים</button>
             </div>
         </div>
     </section>

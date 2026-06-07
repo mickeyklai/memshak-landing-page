@@ -1,19 +1,29 @@
 // ── Lightbox ──
 (function () {
     function initLightbox() {
-        const trigger = document.getElementById('heroScreenshot');
+        const triggers = document.querySelectorAll('.lightbox-trigger');
         const overlay = document.getElementById('lightboxOverlay');
         const closeBtn = document.getElementById('lightboxClose');
-        if (!trigger || !overlay) return;
+        const lightboxImg = overlay && overlay.querySelector('.lightbox-img');
+        if (!triggers.length || !overlay || !lightboxImg) return;
 
-        function open()  {
+        function open(src, alt) {
             if (window.innerWidth <= 1024) return;
+            lightboxImg.src = src;
+            if (alt) lightboxImg.alt = alt;
             overlay.classList.add('open');
             document.body.style.overflow = 'hidden';
         }
         function close() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
 
-        trigger.addEventListener('click', open);
+        triggers.forEach(function (trigger) {
+            trigger.addEventListener('click', function () {
+                const src = trigger.dataset.lightboxSrc || trigger.getAttribute('src');
+                const img = trigger.querySelector('img') || trigger;
+                const alt = img.getAttribute('alt') || '';
+                if (src) open(src, alt);
+            });
+        });
         closeBtn.addEventListener('click', close);
         overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
@@ -23,6 +33,77 @@
         document.addEventListener('DOMContentLoaded', initLightbox);
     } else {
         initLightbox();
+    }
+})();
+
+// ── Recommendations carousel ──
+(function () {
+    function initRecommendationsCarousel() {
+        const track = document.getElementById('recommendationsTrack');
+        const prevBtn = document.getElementById('recommendationsPrev');
+        const nextBtn = document.getElementById('recommendationsNext');
+        if (!track || !prevBtn || !nextBtn) return;
+
+        function getCards() {
+            return Array.from(track.querySelectorAll('.proof-slide'));
+        }
+
+        function getLeadingIndex() {
+            const cards = getCards();
+            if (!cards.length) return 0;
+
+            const trackRect = track.getBoundingClientRect();
+            let bestIndex = 0;
+            let bestOverlap = -1;
+
+            cards.forEach(function (card, index) {
+                const rect = card.getBoundingClientRect();
+                const overlap = Math.min(rect.right, trackRect.right) - Math.max(rect.left, trackRect.left);
+                if (overlap > bestOverlap) {
+                    bestOverlap = overlap;
+                    bestIndex = index;
+                }
+            });
+
+            return bestIndex;
+        }
+
+        function scrollToIndex(index) {
+            const cards = getCards();
+            if (!cards.length) return;
+
+            const clamped = Math.max(0, Math.min(cards.length - 1, index));
+            cards[clamped].scrollIntoView({
+                behavior: 'smooth',
+                inline: 'start',
+                block: 'nearest'
+            });
+        }
+
+        function updateArrows() {
+            const cards = getCards();
+            const index = getLeadingIndex();
+            prevBtn.disabled = index <= 0;
+            nextBtn.disabled = index >= cards.length - 1;
+        }
+
+        prevBtn.addEventListener('click', function () {
+            scrollToIndex(getLeadingIndex() - 1);
+        });
+
+        nextBtn.addEventListener('click', function () {
+            scrollToIndex(getLeadingIndex() + 1);
+        });
+
+        track.addEventListener('scroll', updateArrows, { passive: true });
+        window.addEventListener('resize', updateArrows);
+        updateArrows();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initRecommendationsCarousel);
+    } else {
+        initRecommendationsCarousel();
     }
 })();
 
