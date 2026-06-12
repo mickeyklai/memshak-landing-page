@@ -5,225 +5,182 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>הורדת מלי | מערכת מייצגים לביטוח לאומי</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    <meta name="description" content="הורידו את מלי למחשב Windows. התקנה פשוטה, עדכונים אוטומטיים וגרסה עדכנית תמיד.">
+    <meta name="theme-color" content="#667eea">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
-            color: #fff;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            padding: 48px 40px;
-            max-width: 700px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .logo-wrap {
-            margin-bottom: 8px;
-        }
-
-        .logo-wrap img {
-            height: 52px;
-            object-fit: contain;
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            font-size: 1.05rem;
-            opacity: 0.85;
-            margin-bottom: 32px;
-            line-height: 1.6;
-        }
-
-        .download-btn {
-            display: inline-block;
-            background: #28a745;
-            color: #fff;
-            text-decoration: none;
-            padding: 16px 36px;
-            border-radius: 12px;
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 32px;
-            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
-            cursor: pointer;
-            border: none;
-        }
-
-        .download-btn:hover {
-            background: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 28px rgba(40, 167, 69, 0.5);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 28px;
-            text-align: right;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 16px 18px;
-        }
-
-        .feature-card .icon {
-            font-size: 1.4rem;
-            margin-bottom: 6px;
-        }
-
-        .feature-card strong {
-            display: block;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-        }
-
-        .feature-card p {
-            font-size: 0.82rem;
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        .steps-box {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px 24px;
-            text-align: right;
-            margin-bottom: 28px;
-        }
-
-        .steps-box h3 {
-            font-size: 1rem;
-            margin-bottom: 12px;
-        }
-
-        .steps-box ol {
-            padding-right: 20px;
-            font-size: 0.9rem;
-            line-height: 1.9;
-            opacity: 0.9;
-        }
-
-        .steps-box ol code {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        .footer-note {
-            font-size: 0.8rem;
-            opacity: 0.65;
-            line-height: 1.7;
-        }
-
-        .footer-note a {
-            color: #fff;
-            text-decoration: underline;
-            opacity: 0.9;
-        }
-
-        @media (max-width: 520px) {
-            .container {
-                padding: 32px 20px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/download.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="logo-wrap">
-            <img src="/assets/images/logoWhite.png" alt="מלי" onerror="this.style.display='none'">
-        </div>
-
-        <h1>הורדת מלי</h1>
-        <p class="subtitle">
-            מערכת ניהול מידע ללקוחות מיוצגים בביטוח לאומי<br>
-            כל המידע של הלקוחות במקום אחד, בקליק אחד
-        </p>
-
-        <a id="download-link" href="#" class="download-btn">
-            בודק גרסה אחרונה...
-        </a>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="icon">🔔</div>
-                <strong>התראות חכמות</strong>
-                <p>קבלו עדכונים בזמן אמת על שינויים בתיקים</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🔍</div>
-                <strong>חיפוש וסינון מתקדמים</strong>
-                <p>מוצאים בדיוק מה שצריך במהירות ובקלות</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🔄</div>
-                <strong>סנכרון אוטומטי</strong>
-                <p>המידע מתעדכן בצורה פשוטה, בלי לרדוף אחרי רפרש</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">⏱️</div>
-                <strong>חיסכון בזמן ובכסף</strong>
-                <p>פחות עבודה ידנית, יותר יעילות למשרד</p>
+<body class="download-body">
+    <header class="download-header">
+        <div class="download-header-inner">
+            <div class="download-header-start">
+                <a href="/" class="download-header-brand" aria-label="מלי דף הבית">
+                    <img src="/assets/images/logo.png" alt="מלי">
+                </a>
+                <nav class="download-header-nav" aria-label="ניווט">
+                    <a href="/download/" aria-current="page">הורדה</a>
+                </nav>
             </div>
         </div>
+    </header>
 
-        <div class="steps-box">
-            <h3>📋 איך מתחילים?</h3>
-            <ol>
-                <li>לחצו על כפתור ההורדה למעלה</li>
-                <li>הריצו את קובץ ההתקנה שהורד (<code>Mali-Setup-x.x.x.exe</code>)</li>
-                <li>המערכת תעלה אוטומטית לאחר ההתקנה</li>
-                <li>עדכונים עתידיים מותקנים אוטומטית ברקע</li>
-            </ol>
+    <main class="download-main">
+        <div class="download-shell">
+            <header class="download-intro">
+                <h1 class="download-title">הורידו את מלי</h1>
+                <p class="download-lead">מערכת ניהול מידע ללקוחות מיוצגים בביטוח לאומי</p>
+                <p class="download-tagline">כל המידע של הלקוחות במקום אחד, בקליק אחד</p>
+            </header>
+
+            <article class="download-card">
+                <div class="download-platform">
+                    <div class="download-platform-icon" aria-hidden="true">
+                        <span class="material-symbols-rounded">desktop_windows</span>
+                    </div>
+                    <div class="download-platform-info">
+                        <h2>Windows</h2>
+                        <p>מחשב שולחני או נייד</p>
+                    </div>
+                </div>
+
+                <a id="download-link" href="#" class="download-btn is-loading">
+                    <span class="material-symbols-rounded" aria-hidden="true">progress_activity</span>
+                    בודק גרסה אחרונה...
+                </a>
+                <p class="download-hint" id="download-hint">מאמתים את הגרסה העדכנית ביותר</p>
+
+                <dl class="download-meta">
+                    <div class="download-meta-item">
+                        <dt>גרסה</dt>
+                        <dd class="is-pending" id="meta-version">בודק...</dd>
+                    </div>
+                    <div class="download-meta-item">
+                        <dt>גודל קובץ</dt>
+                        <dd class="is-pending" id="meta-size">בודק...</dd>
+                    </div>
+                    <div class="download-meta-item">
+                        <dt>תאריך עדכון</dt>
+                        <dd class="is-pending" id="meta-date">בודק...</dd>
+                    </div>
+                    <div class="download-meta-item">
+                        <dt>שם קובץ</dt>
+                        <dd class="download-meta-filename is-pending" id="meta-filename">בודק...</dd>
+                    </div>
+                </dl>
+            </article>
+
+            <section class="download-benefits" aria-label="מה כלול במערכת">
+                <div class="download-benefits-grid">
+                    <div class="download-benefit">
+                        <div class="download-benefit-icon">
+                            <span class="material-symbols-rounded">notifications_active</span>
+                        </div>
+                        <h3>התראות חכמות</h3>
+                        <p>קבלו עדכונים בזמן אמת על שינויים בתיקים</p>
+                    </div>
+                    <div class="download-benefit">
+                        <div class="download-benefit-icon">
+                            <span class="material-symbols-rounded">manage_search</span>
+                        </div>
+                        <h3>חיפוש וסינון מתקדמים</h3>
+                        <p>מוצאים בדיוק מה שצריך במהירות ובקלות</p>
+                    </div>
+                    <div class="download-benefit">
+                        <div class="download-benefit-icon">
+                            <span class="material-symbols-rounded">sync</span>
+                        </div>
+                        <h3>סנכרון אוטומטי</h3>
+                        <p>המידע מתעדכן בצורה פשוטה, בלי לרדוף אחרי רפרש</p>
+                    </div>
+                    <div class="download-benefit">
+                        <div class="download-benefit-icon">
+                            <span class="material-symbols-rounded">savings</span>
+                        </div>
+                        <h3>חיסכון בזמן ובכסף</h3>
+                        <p>פחות עבודה ידנית, יותר יעילות למשרד</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="download-steps" aria-labelledby="download-steps-title">
+                <h2 id="download-steps-title">
+                    <span class="material-symbols-rounded" aria-hidden="true">checklist</span>
+                    איך מתחילים?
+                </h2>
+                <ol>
+                    <li>לחצו על כפתור ההורדה למעלה</li>
+                    <li>הריצו את קובץ ההתקנה שהורד (<code>Mali-Setup-x.x.x.exe</code>)</li>
+                    <li>המערכת תעלה אוטומטית לאחר ההתקנה</li>
+                    <li>עדכונים עתידיים מותקנים אוטומטית ברקע</li>
+                </ol>
+            </section>
         </div>
+    </main>
 
-        <p class="footer-note">
-            <span id="version-display">בודק גרסה...</span> &nbsp;|&nbsp;
-            <a href="https://maliapp.co.il">אתר מלי</a>
+    <footer class="download-footer">
+        <p>
+            <span id="version-display">בודק גרסה...</span>
+            &nbsp;|&nbsp;
+            <a href="https://www.maliapp.co.il">אתר מלי</a>
+            &nbsp;|&nbsp;
+            <a href="/assets/docs/privacy-policy.pdf" target="_blank" rel="noopener">מדיניות פרטיות</a>
+            &nbsp;|&nbsp;
+            <a href="/assets/docs/terms-of-use.pdf" target="_blank" rel="noopener">תנאי שימוש</a>
             &nbsp;|&nbsp;
             © 2026 מלי פלטפורמות תוכנה בע"מ
         </p>
-    </div>
+    </footer>
 
     <script>
         const owner = 'mickeyklai';
         const repo = 'memshak-deployment';
+        const releasesUrl = `https://github.com/${owner}/${repo}/releases`;
+
+        const btn = document.getElementById('download-link');
+        const hint = document.getElementById('download-hint');
+        const metaVersion = document.getElementById('meta-version');
+        const metaSize = document.getElementById('meta-size');
+        const metaDate = document.getElementById('meta-date');
+        const metaFilename = document.getElementById('meta-filename');
+        const versionDisplay = document.getElementById('version-display');
+
+        function formatFileSize(bytes) {
+            if (!bytes) return 'לא זמין';
+            const mb = bytes / (1024 * 1024);
+            return mb >= 1 ? `${mb.toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`;
+        }
+
+        function formatDate(iso) {
+            if (!iso) return 'לא זמין';
+            return new Intl.DateTimeFormat('he-IL', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(new Date(iso));
+        }
+
+        function setMeta(el, value) {
+            el.textContent = value;
+            el.classList.remove('is-pending');
+        }
+
+        function setVersionDisplay(tag) {
+            versionDisplay.textContent = tag ? `גרסה אחרונה: ${tag}` : 'בודק גרסה...';
+        }
+
+        function setButtonState({ text, href, icon, variant }) {
+            btn.classList.remove('is-loading', 'download-btn--error', 'download-btn--warning');
+            if (variant) btn.classList.add(variant);
+            btn.href = href;
+            btn.innerHTML = icon
+                ? `<span class="material-symbols-rounded" aria-hidden="true">${icon}</span>${text}`
+                : text;
+        }
 
         fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
             .then(response => {
@@ -235,26 +192,48 @@
                     a.name.endsWith('.exe') && !a.name.toLowerCase().includes('staging')
                 );
 
-                const btn = document.getElementById('download-link');
-                const verDisplay = document.getElementById('version-display');
-
                 if (asset) {
-                    btn.href = asset.browser_download_url;
-                    btn.textContent = `🚀 הורדת מלי (${data.tag_name})`;
-                    verDisplay.textContent = `גרסה אחרונה: ${data.tag_name}`;
+                    setButtonState({
+                        text: `הורידו עכשיו ${data.tag_name}`,
+                        href: asset.browser_download_url,
+                        icon: 'download'
+                    });
+                    hint.textContent = 'לחיצה אחת וההתקנה מתחילה';
+                    setMeta(metaVersion, data.tag_name);
+                    setMeta(metaSize, formatFileSize(asset.size));
+                    setMeta(metaDate, formatDate(data.published_at));
+                    setMeta(metaFilename, asset.name);
+                    setVersionDisplay(data.tag_name);
                 } else {
-                    btn.textContent = '❌ לא נמצא קובץ התקנה בגרסה האחרונה';
-                    btn.style.background = '#dc3545';
-                    console.error('No .exe asset found in release:', data);
+                    setButtonState({
+                        text: 'לא נמצא קובץ התקנה',
+                        href: releasesUrl,
+                        icon: 'error',
+                        variant: 'download-btn--error'
+                    });
+                    hint.textContent = 'אפשר להוריד ידנית מעמוד הגרסאות';
+                    setMeta(metaVersion, data.tag_name || 'לא זמין');
+                    setMeta(metaSize, 'לא זמין');
+                    setMeta(metaDate, formatDate(data.published_at));
+                    setMeta(metaFilename, 'לא זמין');
+                    setVersionDisplay(data.tag_name || null);
                 }
             })
             .catch(err => {
                 console.error('Error fetching release:', err);
-                const btn = document.getElementById('download-link');
-                btn.textContent = '⚠️ שגיאה בבדיקת עדכונים – לחצו להורדה ידנית';
-                btn.href = `https://github.com/${owner}/${repo}/releases`;
-                btn.style.background = '#ffc107';
-                btn.style.color = '#000';
+                setButtonState({
+                    text: 'הורדה ידנית מעמוד הגרסאות',
+                    href: releasesUrl,
+                    icon: 'download',
+                    variant: 'download-btn--warning'
+                });
+                hint.textContent = 'לא הצלחנו לבדוק גרסה. אפשר להוריד ידנית';
+                setMeta(metaVersion, 'לא זמין');
+                setMeta(metaSize, 'לא זמין');
+                setMeta(metaDate, 'לא זמין');
+                setMeta(metaFilename, 'לא זמין');
+                setVersionDisplay(null);
+                versionDisplay.textContent = 'לא ניתן לבדוק גרסה';
             });
     </script>
 </body>
