@@ -1393,10 +1393,12 @@ body {
 
 .contact-modal {
     background: #fff;
-    border-radius: 20px;
-    padding: 48px 40px 40px;
+    border-radius: 16px;
+    padding: 24px 28px 22px;
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
     position: relative;
     box-shadow: 0 32px 80px rgba(0, 0, 0, 0.25);
     animation: lbScaleIn 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1423,59 +1425,94 @@ body {
 .contact-close:hover { background: #e2e8f0; }
 
 .contact-modal-header {
-    text-align: center;
-    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 .contact-modal-icon {
-    width: 60px;
-    height: 60px;
+    width: 44px;
+    height: 44px;
     background: linear-gradient(135deg, var(--purple-start), var(--purple-end));
-    border-radius: 16px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
+    margin: 0;
+    flex-shrink: 0;
 }
 .contact-modal-icon .material-symbols-rounded {
-    font-size: 32px;
+    font-size: 24px;
     color: white;
 }
+.contact-modal-header__text {
+    min-width: 0;
+}
 .contact-modal-header h2 {
-    font-size: 26px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--text-dark);
-    margin-bottom: 6px;
+    margin-bottom: 2px;
 }
 .contact-modal-header p {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-light);
 }
 
+.contact-modal .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.contact-modal .form-row .form-group {
+    margin-bottom: 0;
+}
+
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .form-group label {
     display: block;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-dark);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
-.req { color: #e53e3e; }
+.form-group--referral-other {
+    margin-top: -4px;
+}
+.form-group--referral-other[hidden] {
+    display: none;
+}
 
-.form-group input {
+.form-group input,
+.form-group select {
     width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
+    padding: 9px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
     font-family: 'Heebo', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-dark);
     direction: rtl;
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
+    background-color: #fff;
 }
-.form-group input:focus {
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234a5568' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    padding-left: 32px;
+}
+.form-group select:invalid {
+    color: #a0aec0;
+}
+.form-group input:focus,
+.form-group select:focus {
     border-color: var(--purple-start);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
@@ -1487,34 +1524,36 @@ body {
     80%       { transform: translateX(4px); }
 }
 .form-group.shake input,
+.form-group.shake select,
 .form-group--checkbox.shake .form-checkbox-label {
     animation: formShake 0.35s ease;
 }
 .field-error {
     display: none;
-    font-size: 13px;
+    font-size: 12px;
     color: #e53e3e;
-    margin-top: 5px;
+    margin-top: 3px;
 }
 .form-group.has-error .field-error { display: block; }
-.form-group.has-error input { border-color: #e53e3e; }
+.form-group.has-error input,
+.form-group.has-error select { border-color: #e53e3e; }
 
 .form-group--checkbox .form-checkbox-label {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--text-dark);
-    line-height: 1.45;
+    line-height: 1.35;
     margin-bottom: 0;
 }
 .form-group--checkbox input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
-    margin: 3px 0 0;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin: 2px 0 0;
     padding: 0;
     flex-shrink: 0;
     accent-color: var(--purple-start);
@@ -1535,16 +1574,16 @@ body {
 
 .contact-submit {
     width: 100%;
-    padding: 16px;
+    padding: 11px;
     background: linear-gradient(135deg, var(--purple-start), var(--purple-end));
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-family: 'Heebo', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 4px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .contact-submit:hover {
@@ -1584,10 +1623,18 @@ body {
 
 @media (max-width: 520px) {
     .contact-overlay { padding: 12px; }
-    .contact-modal { padding: 40px 20px 28px; }
-    .contact-modal-header h2 { font-size: 22px; }
-    .contact-modal-header { margin-bottom: 24px; }
-    .form-group { margin-bottom: 16px; }
+    .contact-modal { padding: 20px 16px 18px; }
+    .contact-modal-header h2 { font-size: 18px; }
+    .contact-modal-header { margin-bottom: 14px; }
+    .contact-modal .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 0;
+    }
+    .contact-modal .form-row .form-group {
+        margin-bottom: 10px;
+    }
+    .form-group { margin-bottom: 10px; }
 }
 
 /* ── Lightbox ── */

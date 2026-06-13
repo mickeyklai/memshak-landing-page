@@ -217,13 +217,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Clear error as soon as the user edits the field
-    form.querySelectorAll('input[required]').forEach(function (input) {
-        const group = input.closest('.form-group');
+    form.querySelectorAll('input[required], select[required]').forEach(function (field) {
+        const group = field.closest('.form-group');
         if (!group) return;
-        const eventName = input.type === 'checkbox' ? 'change' : 'input';
-        input.addEventListener(eventName, function () {
+        const eventName = field.type === 'checkbox' || field.tagName === 'SELECT' ? 'change' : 'input';
+        field.addEventListener(eventName, function () {
             group.classList.remove('has-error');
-            if (input.type === 'checkbox') input.setAttribute('aria-invalid', 'false');
+            if (field.type === 'checkbox') field.setAttribute('aria-invalid', 'false');
         });
     });
 
@@ -232,6 +232,35 @@ document.addEventListener('DOMContentLoaded', function () {
     if (phoneInput) {
         phoneInput.addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    const referralSelect = form.querySelector('#referralSource');
+    const referralOtherWrap = form.querySelector('#referralOtherWrap');
+    const referralOtherInput = form.querySelector('#referralOther');
+
+    function updateReferralOther() {
+        const isOther = referralSelect && referralSelect.value === 'אחר';
+        if (referralOtherWrap) referralOtherWrap.hidden = !isOther;
+        if (referralOtherInput) {
+            referralOtherInput.required = isOther;
+            if (!isOther) {
+                referralOtherInput.value = '';
+                const otherGroup = referralOtherInput.closest('.form-group');
+                if (otherGroup) otherGroup.classList.remove('has-error');
+            }
+        }
+    }
+
+    if (referralSelect) {
+        referralSelect.addEventListener('change', updateReferralOther);
+        updateReferralOther();
+    }
+
+    if (referralOtherInput) {
+        referralOtherInput.addEventListener('input', function () {
+            const group = referralOtherInput.closest('.form-group');
+            if (group) group.classList.remove('has-error');
         });
     }
 
@@ -247,21 +276,21 @@ document.addEventListener('DOMContentLoaded', function () {
             let valid = true;
             let firstErrorGroup = null;
 
-            form.querySelectorAll('input[required]').forEach(function (input) {
-                const group = input.closest('.form-group');
+            form.querySelectorAll('input[required], select[required]').forEach(function (field) {
+                const group = field.closest('.form-group');
                 if (!group) return;
                 group.classList.remove('has-error');
 
                 let invalid;
-                if (input.type === 'checkbox') {
+                if (field.type === 'checkbox') {
                     // Checkboxes must be checked — .value is always "כן" regardless of state
-                    invalid = !input.checked;
-                    input.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+                    invalid = !field.checked;
+                    field.setAttribute('aria-invalid', invalid ? 'true' : 'false');
                 } else {
-                    const val = input.value.trim();
-                    const isEmailBad = input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+                    const val = field.value.trim();
+                    const isEmailBad = field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
                     // Israeli phone: 0 followed by 8–9 digits, digits only
-                    const isPhoneBad = input.type === 'tel' && !/^0\d{8,9}$/.test(val);
+                    const isPhoneBad = field.type === 'tel' && !/^0\d{8,9}$/.test(val);
                     invalid = !val || isEmailBad || isPhoneBad;
                 }
 
@@ -281,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 requestAnimationFrame(function () {
                     if (firstErrorGroup) {
                         firstErrorGroup.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                        var firstInvalid = firstErrorGroup.querySelector('input');
+                        var firstInvalid = firstErrorGroup.querySelector('input, select');
                         if (firstInvalid) { try { firstInvalid.focus(); } catch (err) { /* ignore */ } }
                     }
                 });

@@ -73,29 +73,55 @@
                     <div class="contact-modal-icon">
                         <span class="material-symbols-rounded">calendar_month</span>
                     </div>
-                    <h2 id="contactModalHeading">קבעו הדגמה חינם</h2>
-                    <p>נחזור אליכם תוך יום עסקים</p>
+                    <div class="contact-modal-header__text">
+                        <h2 id="contactModalHeading">קבעו הדגמה חינם</h2>
+                        <p>נחזור אליכם תוך יום עסקים</p>
+                    </div>
                 </div>
                 <form id="contactForm" action="https://formspree.io/f/xaqpekpn" method="POST" novalidate>
-                    <div class="form-group">
-                        <label for="fullName">שם מלא <span class="req">*</span></label>
-                        <input type="text" id="fullName" name="שם מלא" placeholder="ישראל ישראלי" required>
-                        <span class="field-error">נא למלא שם מלא</span>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">שם מלא <span class="req">*</span></label>
+                            <input type="text" id="fullName" name="שם מלא" placeholder="ישראל ישראלי" required>
+                            <span class="field-error">נא למלא שם מלא</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">טלפון <span class="req">*</span></label>
+                            <input type="tel" id="phone" name="טלפון" placeholder="0501234567" required>
+                            <span class="field-error">נא למלא מספר טלפון ישראלי תקין (לדוגמה: 0501234567)</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">אימייל <span class="req">*</span></label>
+                            <input type="email" id="email" name="אימייל" placeholder="you@example.com" required>
+                            <span class="field-error">נא למלא כתובת אימייל תקינה</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="officeName">שם משרד <span class="req">*</span></label>
+                            <input type="text" id="officeName" name="שם משרד" placeholder="משרד עורכי דין כהן" required>
+                            <span class="field-error">נא למלא שם משרד</span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone">טלפון <span class="req">*</span></label>
-                        <input type="tel" id="phone" name="טלפון" placeholder="0501234567" required>
-                        <span class="field-error">נא למלא מספר טלפון ישראלי תקין (לדוגמה: 0501234567)</span>
+                        <label for="referralSource">איך שמעת עלינו? <span class="req">*</span></label>
+                        <select id="referralSource" name="איך שמעת עלינו?" required>
+                            <option value="" disabled selected>בחרו...</option>
+                            <option value="חבר/קולגה">חבר/קולגה</option>
+                            <option value="חיפוש בגוגל">חיפוש בגוגל</option>
+                            <option value="אינסטגרם">אינסטגרם</option>
+                            <option value="פייסבוק">פייסבוק</option>
+                            <option value="קבוצת ווצאפ">קבוצת ווצאפ</option>
+                            <option value="בלוג">בלוג</option>
+                            <option value="בינה מלאכותית (ChatGPT / Gemini)">בינה מלאכותית (ChatGPT / Gemini)</option>
+                            <option value="אחר">אחר</option>
+                        </select>
+                        <span class="field-error">נא לבחור איך שמעתם עלינו</span>
                     </div>
-                    <div class="form-group">
-                        <label for="email">אימייל <span class="req">*</span></label>
-                        <input type="email" id="email" name="אימייל" placeholder="you@example.com" required>
-                        <span class="field-error">נא למלא כתובת אימייל תקינה</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="officeName">שם משרד <span class="req">*</span></label>
-                        <input type="text" id="officeName" name="שם משרד" placeholder="משרד עורכי דין כהן" required>
-                        <span class="field-error">נא למלא שם משרד</span>
+                    <div class="form-group form-group--referral-other" id="referralOtherWrap" hidden>
+                        <label for="referralOther">פרטו <span class="req">*</span></label>
+                        <input type="text" id="referralOther" name="פרט (אחר)" placeholder="ספרו לנו איך הגעתם אלינו">
+                        <span class="field-error">נא לפרט איך שמעתם עלינו</span>
                     </div>
                     <div class="form-group form-group--checkbox">
                         <label class="form-checkbox-label" for="marketingConsent">
