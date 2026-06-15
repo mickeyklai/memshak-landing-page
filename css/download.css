@@ -203,6 +203,59 @@
     box-shadow: none !important;
 }
 
+/* Mobile notice */
+.mobile-notice {
+    margin-bottom: 4px;
+    padding: 20px 18px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.07), rgba(118, 75, 162, 0.05));
+    border: 1.5px solid rgba(102, 126, 234, 0.2);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.mobile-notice-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-start), var(--purple-end));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-notice-icon .material-symbols-rounded {
+    font-size: 26px;
+    color: #fff;
+}
+
+.mobile-notice-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.mobile-notice-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-gray);
+    margin-bottom: 14px;
+}
+
+.mobile-notice-url {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--purple-start);
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 8px;
+    padding: 6px 14px;
+    letter-spacing: 0.01em;
+    direction: ltr;
+}
+
 .download-troubleshoot {
     margin-top: 16px;
     padding: 16px 18px;

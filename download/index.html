@@ -54,6 +54,15 @@
                 </button>
                 <p class="download-hint" id="download-hint">מאמתים את הגרסה העדכנית ביותר</p>
 
+                <div id="mobile-notice" class="mobile-notice" hidden role="status">
+                    <div class="mobile-notice-icon" aria-hidden="true">
+                        <span class="material-symbols-rounded">phone_iphone</span>
+                    </div>
+                    <p class="mobile-notice-title">מלי היא תוכנה למחשב Windows בלבד</p>
+                    <p class="mobile-notice-text">כדי להוריד את מלי, פתחו דף זה מדפדפן במחשב Windows שלכם.</p>
+                    <p class="mobile-notice-url">maliapp.co.il/download</p>
+                </div>
+
                 <div id="download-troubleshoot" class="download-troubleshoot" hidden role="alert">
                     <div class="download-troubleshoot-icon" aria-hidden="true">
                         <span class="material-symbols-rounded">error_outline</span>
@@ -157,6 +166,7 @@
 
         const btn = document.getElementById('download-btn');
         const hint = document.getElementById('download-hint');
+        const mobileNotice = document.getElementById('mobile-notice');
         const troubleshoot = document.getElementById('download-troubleshoot');
         const troubleshootTitle = document.getElementById('download-troubleshoot-title');
         const troubleshootText = document.getElementById('download-troubleshoot-text');
@@ -168,6 +178,16 @@
         const versionDisplay = document.getElementById('version-display');
 
         let downloadReady = false;
+
+        function isMobile() {
+            return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        }
+
+        if (isMobile()) {
+            btn.hidden = true;
+            hint.hidden = true;
+            mobileNotice.hidden = false;
+        }
 
         retryBtn.addEventListener('click', () => location.reload());
 
@@ -231,6 +251,8 @@
             hint.textContent = hintText;
             showTroubleshoot({ title, text });
         }
+
+        if (isMobile()) return;
 
         fetch(API_URL)
             .then(response => response.json().then(data => ({ ok: response.ok, data })))
