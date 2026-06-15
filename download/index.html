@@ -48,10 +48,10 @@
                     </div>
                 </div>
 
-                <a id="download-link" href="#" class="download-btn is-loading">
+                <button type="button" id="download-btn" class="download-btn is-loading" disabled>
                     <span class="material-symbols-rounded" aria-hidden="true">progress_activity</span>
                     בודק גרסה אחרונה...
-                </a>
+                </button>
                 <p class="download-hint" id="download-hint">מאמתים את הגרסה העדכנית ביותר</p>
 
                 <div id="download-troubleshoot" class="download-troubleshoot" hidden role="alert">
@@ -152,10 +152,10 @@
     </footer>
 
     <script>
-        const owner = 'mickeyklai';
-        const repo = 'memshak-deployment';
+        const API_URL = '/api/download/latest';
+        const DOWNLOAD_URL = '/download/latest';
 
-        const btn = document.getElementById('download-link');
+        const btn = document.getElementById('download-btn');
         const hint = document.getElementById('download-hint');
         const troubleshoot = document.getElementById('download-troubleshoot');
         const troubleshootTitle = document.getElementById('download-troubleshoot-title');
@@ -167,7 +167,14 @@
         const metaFilename = document.getElementById('meta-filename');
         const versionDisplay = document.getElementById('version-display');
 
+        let downloadReady = false;
+
         retryBtn.addEventListener('click', () => location.reload());
+
+        btn.addEventListener('click', () => {
+            if (!downloadReady) return;
+            window.location.assign(DOWNLOAD_URL);
+        });
 
         function formatFileSize(bytes) {
             if (!bytes) return 'לא זמין';
@@ -193,19 +200,12 @@
             versionDisplay.textContent = tag ? `גרסה אחרונה: ${tag}` : 'בודק גרסה...';
         }
 
-        function setButtonState({ text, href, icon, variant, disabled }) {
-            btn.classList.remove('is-loading', 'download-btn--error', 'download-btn--warning', 'download-btn--disabled');
+        function setButtonState({ text, icon, variant, ready }) {
+            btn.classList.remove('is-loading', 'download-btn--error', 'download-btn--disabled');
             if (variant) btn.classList.add(variant);
-            if (disabled) {
-                btn.classList.add('download-btn--disabled');
-                btn.href = '#';
-                btn.setAttribute('aria-disabled', 'true');
-                btn.onclick = (e) => e.preventDefault();
-            } else {
-                btn.removeAttribute('aria-disabled');
-                btn.onclick = null;
-                btn.href = href;
-            }
+            downloadReady = Boolean(ready);
+            btn.disabled = !downloadReady;
+            if (!downloadReady) btn.classList.add('download-btn--disabled');
             btn.innerHTML = icon
                 ? `<span class="material-symbols-rounded" aria-hidden="true">${icon}</span>${text}`
                 : text;
@@ -226,56 +226,44 @@
                 text: buttonText,
                 icon: 'error',
                 variant: 'download-btn--error',
-                disabled: true
+                ready: false
             });
             hint.textContent = hintText;
             showTroubleshoot({ title, text });
         }
 
-        fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                const asset = data.assets.find(a =>
-                    a.name.endsWith('.exe') && !a.name.toLowerCase().includes('staging')
-                );
-
-                if (asset) {
-                    hideTroubleshoot();
-                    setButtonState({
-                        text: `הורידו עכשיו ${data.tag_name}`,
-                        href: asset.browser_download_url,
-                        icon: 'download'
-                    });
-                    hint.textContent = 'לחיצה אחת וההתקנה מתחילה';
-                    setMeta(metaVersion, data.tag_name);
-                    setMeta(metaSize, formatFileSize(asset.size));
-                    setMeta(metaDate, formatDate(data.published_at));
-                    setMeta(metaFilename, asset.name);
-                    setVersionDisplay(data.tag_name);
-                } else {
-                    showDownloadError({
-                        buttonText: 'ההורדה אינה זמינה כרגע',
-                        hintText: 'לא נמצא קובץ התקנה בגרסה האחרונה',
-                        title: 'לא נמצא קובץ התקנה',
-                        text: 'ייתכן שהגרסה עדיין בעדכון. רעננו את הדף בעוד כמה דקות. אם הבעיה נמשכת, פנו לתמיכה.'
-                    });
-                    setMeta(metaVersion, data.tag_name || 'לא זמין');
-                    setMeta(metaSize, 'לא זמין');
-                    setMeta(metaDate, formatDate(data.published_at));
-                    setMeta(metaFilename, 'לא זמין');
-                    setVersionDisplay(data.tag_name || null);
+        fetch(API_URL)
+            .then(response => response.json().then(data => ({ ok: response.ok, data })))
+            .then(({ ok, data }) => {
+                if (!ok || !data.ok) {
+                    throw new Error(data.error || 'unavailable');
                 }
+
+                hideTroubleshoot();
+                setButtonState({
+                    text: `הורידו עכשיו ${data.tag}`,
+                    icon: 'download',
+                    ready: true
+                });
+                hint.textContent = 'לחיצה אחת וההתקנה מתחילה';
+                setMeta(metaVersion, data.tag);
+                setMeta(metaSize, formatFileSize(data.size));
+                setMeta(metaDate, formatDate(data.publishedAt));
+                setMeta(metaFilename, data.filename);
+                setVersionDisplay(data.tag);
             })
             .catch(err => {
                 console.error('Error fetching release:', err);
+                const isMissingAsset = err.message === 'no_asset';
                 showDownloadError({
                     buttonText: 'ההורדה אינה זמינה כרגע',
-                    hintText: 'לא הצלחנו לבדוק את הגרסה העדכנית',
-                    title: 'לא הצלחנו לטעון את קובץ ההורדה',
-                    text: 'ייתכן שמדובר בבעיה זמנית. נסו לרענן את הדף, ובדקו שיש חיבור אינטרנט יציב. אם הבעיה נמשכת, פנו לתמיכה.'
+                    hintText: isMissingAsset
+                        ? 'לא נמצא קובץ התקנה בגרסה האחרונה'
+                        : 'לא הצלחנו לבדוק את הגרסה העדכנית',
+                    title: isMissingAsset ? 'לא נמצא קובץ התקנה' : 'לא הצלחנו לטעון את קובץ ההורדה',
+                    text: isMissingAsset
+                        ? 'ייתכן שהגרסה עדיין בעדכון. רעננו את הדף בעוד כמה דקות. אם הבעיה נמשכת, פנו לתמיכה.'
+                        : 'ייתכן שמדובר בבעיה זמנית. נסו לרענן את הדף, ובדקו שיש חיבור אינטרנט יציב. אם הבעיה נמשכת, פנו לתמיכה.'
                 });
                 setMeta(metaVersion, 'לא זמין');
                 setMeta(metaSize, 'לא זמין');

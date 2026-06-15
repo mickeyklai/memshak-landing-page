@@ -23,6 +23,16 @@
   status = 200
 
 [[redirects]]
+  from = "/api/download/latest"
+  to = "/.netlify/functions/latest-download"
+  status = 200
+
+[[redirects]]
+  from = "/download/latest"
+  to = "/.netlify/functions/latest-download?dl=1"
+  status = 200
+
+[[redirects]]
   from = "/blog/*"
   to = "/blog/post.html"
   status = 200
