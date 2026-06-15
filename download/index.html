@@ -54,6 +54,21 @@
                 </a>
                 <p class="download-hint" id="download-hint">מאמתים את הגרסה העדכנית ביותר</p>
 
+                <div id="download-troubleshoot" class="download-troubleshoot" hidden role="alert">
+                    <div class="download-troubleshoot-icon" aria-hidden="true">
+                        <span class="material-symbols-rounded">error_outline</span>
+                    </div>
+                    <p class="download-troubleshoot-title" id="download-troubleshoot-title">לא הצלחנו לטעון את קובץ ההורדה</p>
+                    <p class="download-troubleshoot-text" id="download-troubleshoot-text">ייתכן שמדובר בבעיה זמנית. נסו לרענן את הדף, ובדקו שיש חיבור אינטרנט יציב.</p>
+                    <div class="download-troubleshoot-actions">
+                        <button type="button" class="download-troubleshoot-retry" id="download-retry">
+                            <span class="material-symbols-rounded" aria-hidden="true">refresh</span>
+                            רעננו את הדף
+                        </button>
+                        <a href="mailto:mali.help.app@gmail.com" class="download-troubleshoot-contact">צרו קשר עם התמיכה</a>
+                    </div>
+                </div>
+
                 <dl class="download-meta">
                     <div class="download-meta-item">
                         <dt>גרסה</dt>
@@ -139,15 +154,20 @@
     <script>
         const owner = 'mickeyklai';
         const repo = 'memshak-deployment';
-        const releasesUrl = `https://github.com/${owner}/${repo}/releases`;
 
         const btn = document.getElementById('download-link');
         const hint = document.getElementById('download-hint');
+        const troubleshoot = document.getElementById('download-troubleshoot');
+        const troubleshootTitle = document.getElementById('download-troubleshoot-title');
+        const troubleshootText = document.getElementById('download-troubleshoot-text');
+        const retryBtn = document.getElementById('download-retry');
         const metaVersion = document.getElementById('meta-version');
         const metaSize = document.getElementById('meta-size');
         const metaDate = document.getElementById('meta-date');
         const metaFilename = document.getElementById('meta-filename');
         const versionDisplay = document.getElementById('version-display');
+
+        retryBtn.addEventListener('click', () => location.reload());
 
         function formatFileSize(bytes) {
             if (!bytes) return 'לא זמין';
@@ -173,13 +193,43 @@
             versionDisplay.textContent = tag ? `גרסה אחרונה: ${tag}` : 'בודק גרסה...';
         }
 
-        function setButtonState({ text, href, icon, variant }) {
-            btn.classList.remove('is-loading', 'download-btn--error', 'download-btn--warning');
+        function setButtonState({ text, href, icon, variant, disabled }) {
+            btn.classList.remove('is-loading', 'download-btn--error', 'download-btn--warning', 'download-btn--disabled');
             if (variant) btn.classList.add(variant);
-            btn.href = href;
+            if (disabled) {
+                btn.classList.add('download-btn--disabled');
+                btn.href = '#';
+                btn.setAttribute('aria-disabled', 'true');
+                btn.onclick = (e) => e.preventDefault();
+            } else {
+                btn.removeAttribute('aria-disabled');
+                btn.onclick = null;
+                btn.href = href;
+            }
             btn.innerHTML = icon
                 ? `<span class="material-symbols-rounded" aria-hidden="true">${icon}</span>${text}`
                 : text;
+        }
+
+        function showTroubleshoot({ title, text }) {
+            troubleshootTitle.textContent = title;
+            troubleshootText.textContent = text;
+            troubleshoot.hidden = false;
+        }
+
+        function hideTroubleshoot() {
+            troubleshoot.hidden = true;
+        }
+
+        function showDownloadError({ buttonText, hintText, title, text }) {
+            setButtonState({
+                text: buttonText,
+                icon: 'error',
+                variant: 'download-btn--error',
+                disabled: true
+            });
+            hint.textContent = hintText;
+            showTroubleshoot({ title, text });
         }
 
         fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
@@ -193,6 +243,7 @@
                 );
 
                 if (asset) {
+                    hideTroubleshoot();
                     setButtonState({
                         text: `הורידו עכשיו ${data.tag_name}`,
                         href: asset.browser_download_url,
@@ -205,13 +256,12 @@
                     setMeta(metaFilename, asset.name);
                     setVersionDisplay(data.tag_name);
                 } else {
-                    setButtonState({
-                        text: 'לא נמצא קובץ התקנה',
-                        href: releasesUrl,
-                        icon: 'error',
-                        variant: 'download-btn--error'
+                    showDownloadError({
+                        buttonText: 'ההורדה אינה זמינה כרגע',
+                        hintText: 'לא נמצא קובץ התקנה בגרסה האחרונה',
+                        title: 'לא נמצא קובץ התקנה',
+                        text: 'ייתכן שהגרסה עדיין בעדכון. רעננו את הדף בעוד כמה דקות. אם הבעיה נמשכת, פנו לתמיכה.'
                     });
-                    hint.textContent = 'אפשר להוריד ידנית מעמוד הגרסאות';
                     setMeta(metaVersion, data.tag_name || 'לא זמין');
                     setMeta(metaSize, 'לא זמין');
                     setMeta(metaDate, formatDate(data.published_at));
@@ -221,13 +271,12 @@
             })
             .catch(err => {
                 console.error('Error fetching release:', err);
-                setButtonState({
-                    text: 'הורדה ידנית מעמוד הגרסאות',
-                    href: releasesUrl,
-                    icon: 'download',
-                    variant: 'download-btn--warning'
+                showDownloadError({
+                    buttonText: 'ההורדה אינה זמינה כרגע',
+                    hintText: 'לא הצלחנו לבדוק את הגרסה העדכנית',
+                    title: 'לא הצלחנו לטעון את קובץ ההורדה',
+                    text: 'ייתכן שמדובר בבעיה זמנית. נסו לרענן את הדף, ובדקו שיש חיבור אינטרנט יציב. אם הבעיה נמשכת, פנו לתמיכה.'
                 });
-                hint.textContent = 'לא הצלחנו לבדוק גרסה. אפשר להוריד ידנית';
                 setMeta(metaVersion, 'לא זמין');
                 setMeta(metaSize, 'לא זמין');
                 setMeta(metaDate, 'לא זמין');
