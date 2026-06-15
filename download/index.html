@@ -152,8 +152,8 @@
     </footer>
 
     <script>
-        const API_URL = '/api/download/latest';
-        const DOWNLOAD_URL = '/download/latest';
+        const owner = 'mickeyklai';
+        const repo = 'memshak-deployment';
 
         const btn = document.getElementById('download-btn');
         const hint = document.getElementById('download-hint');
@@ -168,21 +168,11 @@
         const versionDisplay = document.getElementById('version-display');
 
         let downloadReady = false;
+        let downloadUrl = null;
 
         function isMobile() {
             return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
         }
-
-        retryBtn.addEventListener('click', () => location.reload());
-
-        btn.addEventListener('click', () => {
-            if (isMobile()) {
-                hint.textContent = 'מלי זמינה להורדה ממחשב Windows בלבד. פתחו את maliapp.co.il/download מהמחשב שלכם.';
-                return;
-            }
-            if (!downloadReady) return;
-            window.location.assign(DOWNLOAD_URL);
-        });
 
         function formatFileSize(bytes) {
             if (!bytes) return 'לא זמין';
@@ -240,6 +230,17 @@
             showTroubleshoot({ title, text });
         }
 
+        retryBtn.addEventListener('click', () => location.reload());
+
+        btn.addEventListener('click', () => {
+            if (isMobile()) {
+                hint.textContent = 'מלי זמינה להורדה ממחשב Windows בלבד. פתחו את maliapp.co.il/download מהמחשב שלכם.';
+                return;
+            }
+            if (!downloadReady || !downloadUrl) return;
+            window.location.assign(downloadUrl);
+        });
+
         if (isMobile()) {
             setButtonState({
                 text: 'הורידו את מלי',
@@ -247,49 +248,53 @@
                 ready: true
             });
             hint.textContent = '';
-            return;
+        } else {
+            fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
+                .then(response => {
+                    if (!response.ok) throw new Error('fetch_failed');
+                    return response.json();
+                })
+                .then(data => {
+                    const asset = data.assets.find(a =>
+                        a.name.endsWith('.exe') && !a.name.toLowerCase().includes('staging')
+                    );
+
+                    if (!asset) throw new Error('no_asset');
+
+                    downloadUrl = asset.browser_download_url;
+                    hideTroubleshoot();
+                    setButtonState({
+                        text: `הורידו עכשיו ${data.tag_name}`,
+                        icon: 'download',
+                        ready: true
+                    });
+                    hint.textContent = 'לחיצה אחת וההתקנה מתחילה';
+                    setMeta(metaVersion, data.tag_name);
+                    setMeta(metaSize, formatFileSize(asset.size));
+                    setMeta(metaDate, formatDate(data.published_at));
+                    setMeta(metaFilename, asset.name);
+                    setVersionDisplay(data.tag_name);
+                })
+                .catch(err => {
+                    console.error('Error fetching release:', err);
+                    const isMissingAsset = err.message === 'no_asset';
+                    showDownloadError({
+                        buttonText: 'ההורדה אינה זמינה כרגע',
+                        hintText: isMissingAsset
+                            ? 'לא נמצא קובץ התקנה בגרסה האחרונה'
+                            : 'לא הצלחנו לבדוק את הגרסה העדכנית',
+                        title: isMissingAsset ? 'לא נמצא קובץ התקנה' : 'לא הצלחנו לטעון את קובץ ההורדה',
+                        text: isMissingAsset
+                            ? 'ייתכן שהגרסה עדיין בעדכון. רעננו את הדף בעוד כמה דקות. אם הבעיה נמשכת, פנו לתמיכה.'
+                            : 'ייתכן שמדובר בבעיה זמנית. נסו לרענן את הדף, ובדקו שיש חיבור אינטרנט יציב. אם הבעיה נמשכת, פנו לתמיכה.'
+                    });
+                    setMeta(metaVersion, 'לא זמין');
+                    setMeta(metaSize, 'לא זמין');
+                    setMeta(metaDate, 'לא זמין');
+                    setMeta(metaFilename, 'לא זמין');
+                    versionDisplay.textContent = 'לא ניתן לבדוק גרסה';
+                });
         }
-
-        fetch(API_URL)
-            .then(response => response.json().then(data => ({ ok: response.ok, data })))
-            .then(({ ok, data }) => {
-                if (!ok || !data.ok) {
-                    throw new Error(data.error || 'unavailable');
-                }
-
-                hideTroubleshoot();
-                setButtonState({
-                    text: `הורידו עכשיו ${data.tag}`,
-                    icon: 'download',
-                    ready: true
-                });
-                hint.textContent = 'לחיצה אחת וההתקנה מתחילה';
-                setMeta(metaVersion, data.tag);
-                setMeta(metaSize, formatFileSize(data.size));
-                setMeta(metaDate, formatDate(data.publishedAt));
-                setMeta(metaFilename, data.filename);
-                setVersionDisplay(data.tag);
-            })
-            .catch(err => {
-                console.error('Error fetching release:', err);
-                const isMissingAsset = err.message === 'no_asset';
-                showDownloadError({
-                    buttonText: 'ההורדה אינה זמינה כרגע',
-                    hintText: isMissingAsset
-                        ? 'לא נמצא קובץ התקנה בגרסה האחרונה'
-                        : 'לא הצלחנו לבדוק את הגרסה העדכנית',
-                    title: isMissingAsset ? 'לא נמצא קובץ התקנה' : 'לא הצלחנו לטעון את קובץ ההורדה',
-                    text: isMissingAsset
-                        ? 'ייתכן שהגרסה עדיין בעדכון. רעננו את הדף בעוד כמה דקות. אם הבעיה נמשכת, פנו לתמיכה.'
-                        : 'ייתכן שמדובר בבעיה זמנית. נסו לרענן את הדף, ובדקו שיש חיבור אינטרנט יציב. אם הבעיה נמשכת, פנו לתמיכה.'
-                });
-                setMeta(metaVersion, 'לא זמין');
-                setMeta(metaSize, 'לא זמין');
-                setMeta(metaDate, 'לא זמין');
-                setMeta(metaFilename, 'לא זמין');
-                setVersionDisplay(null);
-                versionDisplay.textContent = 'לא ניתן לבדוק גרסה';
-            });
     </script>
 </body>
 </html>
