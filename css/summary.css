@@ -1,0 +1,337 @@
+/* Hosted sync-summary page — clean focused layout, מלי brand.
+   Standalone: opened from WhatsApp/email links on mobile, so no site nav. */
+
+.summary-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    background: linear-gradient(180deg, #f0f2f8 0%, var(--bg-gray) 30%, var(--bg-gray) 100%);
+}
+
+/* Header */
+.summary-header {
+    background: var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    padding: 14px 0;
+}
+
+.summary-header-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.summary-header-brand img {
+    height: 38px;
+    width: auto;
+    display: block;
+}
+
+/* Main */
+.summary-main {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 48px;
+}
+
+.summary-shell {
+    width: 100%;
+    max-width: 700px;
+}
+
+/* Card widget (challenge / awaiting-code / error / ready states) */
+.summary-card {
+    width: 100%;
+    background: var(--bg-white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(102, 126, 234, 0.12);
+    overflow: hidden;
+}
+
+.summary-error-card {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.summary-card-header {
+    background: linear-gradient(135deg, var(--purple-start) 0%, var(--purple-end) 100%);
+    color: #fff;
+    padding: 28px 24px;
+    text-align: center;
+}
+
+.summary-card-header h1 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.summary-card-header p {
+    margin: 4px 0 0;
+    opacity: 0.92;
+    font-size: 14px;
+}
+
+.summary-expires-note {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 6px;
+}
+
+.summary-card-body {
+    padding: 24px;
+}
+
+/* Loading / centered state */
+.summary-state-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 24px;
+    text-align: center;
+    color: var(--text-gray);
+}
+
+.summary-state-msg {
+    margin-top: 16px;
+    font-size: 15px;
+}
+
+.summary-spin {
+    font-size: 40px;
+    color: var(--purple-start);
+    animation: summary-spin-rotate 1s linear infinite;
+}
+
+@keyframes summary-spin-rotate {
+    to { transform: rotate(360deg); }
+}
+
+/* Error states */
+.summary-error-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.summary-error-card .summary-card-body h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.summary-error-card .summary-card-body p {
+    color: var(--text-gray);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* OTP challenge */
+.summary-otp-row {
+    display: flex;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.summary-otp-input {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1px solid #d8dce6;
+    border-radius: 10px;
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+.summary-otp-input:focus {
+    outline: none;
+    border-color: var(--purple-start);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.summary-otp-btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--purple-start), var(--purple-end));
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.summary-otp-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.32);
+}
+
+.summary-otp-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.summary-otp-error {
+    color: #c0392b;
+    font-size: 13px;
+    margin: 6px 0 0;
+}
+
+.summary-resend-link {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: var(--purple-start);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 8px 0 0;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+/* Entity sections */
+.summary-entity-section {
+    margin-bottom: 24px;
+}
+
+.summary-section-title {
+    color: var(--purple-start);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    text-align: right;
+}
+
+.summary-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+}
+
+.summary-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-white);
+    font-size: 13px;
+    text-align: right;
+}
+
+.summary-table-wrapper thead tr {
+    background: var(--bg-gray);
+}
+
+.summary-table-wrapper th {
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text-gray);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.summary-table-wrapper td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #eef0f5;
+    color: var(--text-dark);
+    vertical-align: top;
+}
+
+.summary-date-cell {
+    white-space: nowrap;
+    color: var(--text-gray);
+}
+
+.summary-table-wrapper tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.summary-doc-link {
+    display: inline-block;
+    margin-inline-start: 8px;
+    color: var(--purple-start);
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Empty state */
+.summary-empty-state {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+/* Confidentiality footer note (inside the ready card) */
+.summary-confidentiality {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #eef0f5;
+}
+
+.summary-confidentiality p {
+    font-size: 11px;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Page footer */
+.summary-footer {
+    padding: 18px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    background: var(--bg-white);
+}
+
+.summary-footer a {
+    color: var(--text-gray);
+    text-decoration: underline;
+}
+
+.summary-footer a:hover {
+    color: var(--purple-start);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .summary-main {
+        padding: 0;
+    }
+
+    .summary-card {
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        min-height: calc(100vh - 66px);
+    }
+
+    .summary-card-header {
+        padding: 20px 16px;
+    }
+
+    .summary-card-body {
+        padding: 16px;
+    }
+
+    .summary-table-wrapper td,
+    .summary-table-wrapper th {
+        padding: 8px;
+    }
+
+    .summary-footer p {
+        font-size: 12px;
+        line-height: 1.85;
+    }
+}

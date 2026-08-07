@@ -37,6 +37,11 @@
   to = "/blog/post.html"
   status = 200
 
+[[redirects]]
+  from = "/summary/*"
+  to = "/summary/index.html"
+  status = 200
+
 [[headers]]
   for = "/robots.txt"
   [headers.values]
