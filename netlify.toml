@@ -37,10 +37,22 @@
   to = "/blog/post.html"
   status = 200
 
+# The summary page itself lives only in the memshak backend (unified-remote-service.js
+# GET /summary/:token) — these are pure reverse-proxy rules so maliapp.co.il/summary/...
+# stays in the address bar while Railway serves the actual content. ?env=staging picks
+# the staging backend; anything else (including no query string) goes to production.
 [[redirects]]
   from = "/summary/*"
-  to = "/summary/index.html"
+  to = "https://prolific-caring-mali-staging.up.railway.app/summary/:splat"
   status = 200
+  force = true
+  query = {env = "staging"}
+
+[[redirects]]
+  from = "/summary/*"
+  to = "https://prolific-caring-mali-production.up.railway.app/summary/:splat"
+  status = 200
+  force = true
 
 [[headers]]
   for = "/robots.txt"
